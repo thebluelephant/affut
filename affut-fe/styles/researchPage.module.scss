@@ -1,11 +1,16 @@
 @import './variables/colors.module.scss';
 
+$jobDetails-header : 10vh;
+$jobDetails-footer : 5vh;
+$blocks-margin : 5vh;
+
 .researchPage {
     height: 100%;
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    color: $grey;
 
     .offers {
         display: flex;
@@ -16,24 +21,48 @@
 
 
         &__jobs {
-            width: 45vw;
+            width: 48vw;
             overflow: auto;
+
+            @media screen and (max-width: 900px) {
+                width: 100vw;
+            }
 
             .job {
                 height: 50px;
-                width: 50vw;
+                width: 100%;
                 margin: 10px 0;
                 display: flex;
                 align-items: center;
                 padding: 10px;
                 background-color: $white-transparent;
-                border-radius: 5px;
+                border-radius: 10px;
+                cursor: pointer;
+
+                &--selected,
+                &:hover {
+                    background-color: white;
+                }
+
+                &__name {
+                    margin-right: 15px;
+                }
+
+                &__place {
+                    text-transform: lowercase;
+
+                    &:before {
+                        content: "(";
+                    }
+
+                    &:after {
+                        content: ")";
+                    }
+
+                }
             }
         }
 
-        &__jobdetails {
-            width: 45vw;
-            background-color: $white-transparent;
-        }
+        
     }
 }

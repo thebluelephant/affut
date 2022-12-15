@@ -1,12 +1,12 @@
 @import '../../../styles/variables/colors.module.scss';
 
-.button{
+.button {
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
+    color: $white ;
 
-    &__primary{
+    &__primary {
         background-color: $primary;
-        color: $white;
     }
 }

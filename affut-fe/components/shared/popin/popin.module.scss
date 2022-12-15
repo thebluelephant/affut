@@ -1,0 +1,25 @@
+@import '../../../styles/variables/colors.module.scss';
+
+.popin {
+    z-index: 5;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+
+    .container {
+        background-color: white;
+        height: 95%;
+        width: 95%;
+        border-radius: 10px;
+    }
+
+    .cross {
+        position: absolute;
+        right: 30px;
+        top: 30px;
+    }
+}

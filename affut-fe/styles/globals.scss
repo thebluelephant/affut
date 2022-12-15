@@ -1,8 +1,18 @@
+@font-face {
+  font-family: "KumbhSans-Regular";
+  src: url('./fonts/Kumbh_Sans/KumbhSans-Regular.ttf');
+}
+
+@font-face {
+  font-family: "KumbhSans-Bold";
+  src: url('./fonts/Kumbh_Sans/KumbhSans-Bold.ttf');
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  font-family: KumbhSans-Regular, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
@@ -25,32 +35,31 @@ body {
   width: 100%;
   height: 100%;
 
-  p{
+  p {
     margin: 0;
   }
-  
+
   .app {
     height: 100%;
     width: 100%;
     position: fixed;
-    background: rgb(93,189,196);
-    background: -moz-linear-gradient(137deg, rgba(93,189,196,0.54) 0%, rgba(114,166,184,0.3) 39%, rgba(191,78,140,0.3) 100%);
-    background: -webkit-linear-gradient(137deg, rgba(93,189,196,0.54) 0%, rgba(114,166,184,0.3) 39%, rgba(191,78,140,0.3) 100%);
-    background: linear-gradient(137deg, rgba(93,189,196,0.54) 0%, rgba(114,166,184,0.3) 39%, rgba(191,78,140,0.3) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#5dbdc4",endColorstr="#bf4e8c",GradientType=1);
+    background: rgb(93, 189, 196);
+    background: -moz-linear-gradient(137deg, rgba(93, 189, 196, 0.54) 0%, rgba(114, 166, 184, 0.3) 39%, rgba(191, 78, 140, 0.3) 100%);
+    background: -webkit-linear-gradient(137deg, rgba(93, 189, 196, 0.54) 0%, rgba(114, 166, 184, 0.3) 39%, rgba(191, 78, 140, 0.3) 100%);
+    background: linear-gradient(137deg, rgba(93, 189, 196, 0.54) 0%, rgba(114, 166, 184, 0.3) 39%, rgba(191, 78, 140, 0.3) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#5dbdc4", endColorstr="#bf4e8c", GradientType=1);
 
     .background-texture {
       opacity: 0.1;
     }
-    
+
   }
 
-  .appBody{
-    padding : 5px;
+  .appBody {
+    padding: 5px;
     height: 100%;
     position: fixed;
     width: 100%;
     z-index: 2;
   }
 }
-

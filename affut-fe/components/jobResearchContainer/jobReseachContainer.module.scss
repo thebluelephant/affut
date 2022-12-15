@@ -2,15 +2,21 @@
 
 .jobReseachContainer{
     width: 90%;
-    height: 10vh;
+    height: 5vh;
+    padding : 30px 10px;
     background-color: $white-transparent;
     border-radius: 10;
     display: flex;
     align-items: center; 
-    justify-content: space-around;
+    justify-content: space-between;
+    gap: 10px;
+    
+    .title {
+        width: 1000px;
+    }
 
     input {
-        width: 200px;
+        width: 100%;
         padding: 10px;
     }
 

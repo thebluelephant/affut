@@ -28,10 +28,19 @@ export const getJobOfferApiToken: () => Promise<PoleEmploiToken> = () => {
  * @returns job offers list
  * 
  */
-export const searchJobOffers = (jobKeyWord: string, locality: number): Promise<PoleEmploiJob[]> => {
+export const searchJobOffers = (jobKeyWord?: string, locality?: number): Promise<PoleEmploiJob[]> => {
     return getJobOfferApiToken().then((tokenData) => {
         const token = `${tokenData.token_type} ${tokenData.access_token}`;
-        return axios.get(`${process.env.NEXT_PUBLIC_POLEEMPLOI_JOBOFFERAPI}/offres/search?commune=${locality}&motsCles=${jobKeyWord}`, {
+        let url = `${process.env.NEXT_PUBLIC_POLEEMPLOI_JOBOFFERAPI}/offres/search?`;
+
+        if (locality) {
+            url += `&commune=${locality}`
+        }
+        if (jobKeyWord) {
+            url += `&motsCles=${jobKeyWord}`
+        }
+
+        return axios.get(url, {
             headers: {
                 Authorization: token
             }
