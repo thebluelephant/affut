@@ -1,0 +1,8 @@
+@import '../../../styles/variables/colors.module.scss';
+
+.title{
+    &__primary{
+        background-color: $primary;
+        color: $white;
+    }
+}
