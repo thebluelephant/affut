@@ -3,12 +3,17 @@ import styles from './title.module.scss';
 
 type TitleProps = {
     title: string
+    type?: string
 }
 
-const Title: FC<TitleProps> = ({ title }): ReactElement => {
+const Title: FC<TitleProps> = ({ title, type = 'primary' }): ReactElement => {
 
     return (
-        <p>{title}</p>
+        <div className={`${styles.title}`}>
+            <span className={`${styles.underline}`} />
+            <p className={`${styles.text} ${type === "primary" ? styles.text__primary : ''}`}>{title}</p>
+
+        </div>
     )
 };
 

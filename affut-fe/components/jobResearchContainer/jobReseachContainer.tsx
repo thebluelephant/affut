@@ -1,6 +1,7 @@
 import React, { FC, ReactElement, useState } from 'react';
 import styles from './jobReseachContainer.module.scss';
 import Button from '../shared/button/button';
+import Title from '../shared/title/title';
 
 type JobSearchContainerProps = {
     onResearch: (jobKeyWord: string, locality: number) => void;
@@ -12,7 +13,10 @@ const JobReseachContainer: FC<JobSearchContainerProps> = ({ onResearch }): React
 
     return (
         <div className={styles.jobReseachContainer}>
-            <p className='title'>Rechercher une offre</p>
+            <div className={styles.title}>
+                <Title title={'Rechercher une offre'}/>
+            </div>
+            
             <input type="text" placeholder='Intitulé du job' onChange={(e) => setJobKeyWord(e.target.value)} />
             <input type="number" placeholder='Code postale' onChange={(e) => setLocality(e.target.value)} />
             <Button title={'Rechercher'} type={"primary"} onButtonClick={() => onResearch(jobKeyWord, locality)

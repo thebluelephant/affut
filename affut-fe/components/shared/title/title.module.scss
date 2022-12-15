@@ -1,8 +1,22 @@
 @import '../../../styles/variables/colors.module.scss';
 
-.title{
-    &__primary{
-        background-color: $primary;
-        color: $white;
+.title {
+    position: relative;
+    .text {
+        z-index: 2;
+        position: relative;
+        &__primary {
+            font-family: 'KumbhSans-Bold';
+            font-size: 30px;
+        }
     }
+
+    .underline {
+        position: absolute;
+        bottom: 5px;
+        height: 10px;
+        width: 100%;
+        background-color: $yellow;
+    }
+
 }
