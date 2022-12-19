@@ -1,0 +1,125 @@
+@import '../../styles/variables/colors.module.scss';
+@import '../../styles/variables/sizes.module.scss';
+
+/* header */
+.header {
+    background-color: #fff;
+    box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
+    position: fixed;
+    width: 100%;
+    z-index: 3;
+    height: $menu-height-responsive;
+
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        overflow: hidden;
+        background-color: #fff;
+    }
+
+    li {
+        &:hover {
+            border-bottom: solid 3px $primary;
+        }
+
+        a {
+            display: block;
+            border-right: 1px solid #f4f4f4;
+            text-decoration: none;
+        }
+    }
+
+    .menu {
+        clear: both;
+        max-height: 0;
+        transition: max-height .2s ease-out;
+    }
+
+    /* menu icon */
+    .menuIcon {
+        cursor: pointer;
+        display: inline-block;
+        float: right;
+        position: relative;
+        user-select: none;
+        height: $menu-height-responsive;
+
+        .navicon {
+
+            &::before,
+            &::after {
+                content: '';
+                display: block;
+                height: 100%;
+                position: absolute;
+                transition: all .2s ease-out;
+                width: 100%;
+            }
+        }
+
+    }
+
+}
+
+/* menu btn */
+.header .menuBtn {
+    display: none;
+}
+
+.header .menuBtn:checked~.menu {
+    max-height: 240px
+}
+
+.header .menuBtn:checked~.menuIcon .navicon {
+    background: transparent;
+}
+
+.header .menuBtn:checked~.menuIcon .navicon:before {
+    transform: rotate(-45deg);
+}
+
+.header .menuBtn:checked~.menuIcon .navicon:after {
+    transform: rotate(45deg);
+}
+
+.header .menuBtn:checked~.menuIcon:not(.steps) .navicon:before,
+.header .menuBtn:checked~.menuIcon:not(.steps) .navicon:after {
+    top: 0;
+}
+
+/* 48em = 768px */
+@media (min-width: 48em) {
+    .header {
+        height: $menu-height;
+        display: flex;
+        justify-content: center;
+
+        ul {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        li {
+            float: left;
+            padding: 0 20px;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .menu {
+            clear: none;
+            float: right;
+            max-height: none;
+        }
+
+        .menuIcon {
+            display: none;
+        }
+    }
+
+}

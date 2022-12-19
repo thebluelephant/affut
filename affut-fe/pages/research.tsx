@@ -26,9 +26,9 @@ const Research: NextPage<ResearchProps> = ({ }) => {
       })
   }
 
-  const selectJobOffer = (offer : PoleEmploiJob) => {
+  const selectJobOffer = (offer: PoleEmploiJob) => {
     setJobDetails(offer);
-    if (windowWidth < 900){
+    if (windowWidth < 900) {
       setPopInOpen(true);
     }
   }
@@ -39,7 +39,7 @@ const Research: NextPage<ResearchProps> = ({ }) => {
       <div className={styles.offers__jobs}>
         {jobOffers?.map((offer) => {
           return (
-            <div className={`${styles.job} ${offer.id === jobDetails?.id ? styles['job--selected'] : ''}`} key={offer.id} onClick={() => { selectJobOffer(offer)}}>
+            <div className={`${styles.job} ${offer.id === jobDetails?.id ? styles['job--selected'] : ''}`} key={offer.id} onClick={() => { selectJobOffer(offer) }}>
               <p className={`${styles.job__name}`}>{offer.intitule}</p>
               <p className={`${styles.job__place}`}>{offer.lieuTravail.libelle}</p>
             </div>
