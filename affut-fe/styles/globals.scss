@@ -1,3 +1,5 @@
+@import '../styles/variables/sizes.module.scss';
+
 @font-face {
   font-family: "KumbhSans-Regular";
   src: url('./fonts/Kumbh_Sans/KumbhSans-Regular.ttf');
@@ -57,9 +59,15 @@ body {
 
   .appBody {
     padding: 5px;
-    height: 100%;
+    height: calc(100% - $menu-height-responsive);
     position: fixed;
     width: 100%;
     z-index: 2;
+    bottom: 0;
+
+    @media (min-width: 48em) {
+      height: calc(100% - $menu-height);
+    }
+
   }
 }
