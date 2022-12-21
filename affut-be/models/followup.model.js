@@ -33,8 +33,8 @@ Followup.findAllByUserId = (userId, result) => {
         }
 
         if (res.length) {
-            console.log("found followup: ", res[0]);
-            result(null, res[0]);
+            console.log("found followup: ", res);
+            result(null, res);
             return;
         }
 
