@@ -9,7 +9,7 @@ type MenuProps = {
 const Menu: FC<MenuProps> = () => {
     return (<header className={`${styles.header}`}>
         <input className={`${styles.menuBtn}`} type="checkbox" id={`${styles.menuBtn}`} />
-        <label className={`${styles.menuIcon}`} for={`${styles.menuBtn}`}><span className="navicon"><BurgerMenu /></span></label>
+        <label className={`${styles.menuIcon}`} htmlFor={`${styles.menuBtn}`}><span className="navicon"><BurgerMenu /></span></label>
         <ul className={`${styles.menu}`}>
             <li><Link href="/">Accueil</Link></li>
             <li><Link href="/research">Rechercher</Link></li>
