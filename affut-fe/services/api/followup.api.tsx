@@ -10,3 +10,11 @@ export const getUserFollowUps: (userId: string) => Promise<Followup[]> = (userId
         return response.data
     })
 }
+/**
+ * Update a follow up 
+ */
+export const updateFollowup: (followup: Followup) => Promise<number> = (followup) => {
+    return axios.put(`${baseApi}/followup/update/${followup.id}`, followup).then((response) => {
+        return response.status
+    })
+}

@@ -2,10 +2,11 @@
 
 
 .followupPage {
+    display: flex;
+    justify-content: center;
     .table {
-        display: flex;
-        flex-direction: column;
         color: $grey;
+        width: 90vw;
 
         span {
             display: flex;
@@ -31,22 +32,42 @@
                 display: flex;
                 padding: 10px;
                 font-family: "KumbhSans-Bold";
+                
             }
 
             &__data,
             &__header {
-                width: 83%;
+                width: 87%;
+                gap: 10px;
+
+                input {
+                    width: 200px;
+                    height: 30px;
+
+                    @media screen and (max-width: 950px) {
+                        width: 20%;
+                    }
+                }
             }
 
             &__actions {
-                width: 15%;
+                width: 10%;
 
                 .actionButton {
                     background: $grey-light;
+                    display: flex;
                     padding: 5px;
                     border-radius: 5px;
                     margin-right: 10px;
                     cursor: pointer;
+
+                    &--green {
+                        background: $green-light;
+                    }
+
+                    &--red{
+                        background: $red-light;
+                    }
 
                     .icon {
                         height: 20px;

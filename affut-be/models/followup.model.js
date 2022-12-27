@@ -19,7 +19,6 @@ Followup.create = (newFollowup, result) => {
             return;
         }
 
-        console.log("created followup: ", { id: res.insertId, ...newFollowup });
         result(null, { id: res.insertId, ...newFollowup });
     });
 };
@@ -33,7 +32,6 @@ Followup.findAllByUserId = (userId, result) => {
         }
 
         if (res.length) {
-            console.log("found followup: ", res);
             result(null, res);
             return;
         }
@@ -60,8 +58,6 @@ Followup.updateById = (id, followup, result) => {
                 result({ kind: "not_found" }, null);
                 return;
             }
-
-            console.log("updated followup: ", { id: id, ...followup });
             result(null, { id: id, ...followup });
         }
     );
@@ -80,8 +76,6 @@ Followup.remove = (id, result) => {
             result({ kind: "not_found" }, null);
             return;
         }
-
-        console.log("deleted followup with id: ", id);
         result(null, res);
     });
 };
