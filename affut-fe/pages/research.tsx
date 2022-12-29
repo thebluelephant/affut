@@ -1,7 +1,7 @@
 ﻿import { NextPage } from "next";
 import { useState } from "react";
-import JobDetails from "../components/jobDetails/jobDetails";
-import JobReseachContainer from "../components/jobResearchContainer/jobReseachContainer";
+import JobDetails from "../components/researchPage/jobDetails/jobDetails";
+import JobReseachContainer from "../components/researchPage/jobResearchContainer/jobReseachContainer";
 import Popin from "../components/shared/popin/popin";
 import { searchJobOffers } from "../services/api/poleemploi.api";
 import { useWindowDimensions } from "../services/hooks/windowDimension";
@@ -33,6 +33,17 @@ const Research: NextPage<ResearchProps> = ({ }) => {
     }
   }
 
+  const renderJobDetails = () => {
+    if (jobDetails) {
+      if (windowWidth && windowWidth > 900) {
+        return <JobDetails job={jobDetails} />
+      } else {
+        return <Popin shouldOpen={popInOpen} onPopinCrossClicked={() => setPopInOpen(false)} ><JobDetails job={jobDetails} /></Popin>
+      }
+    }
+
+  }
+
   return <div className={styles.researchPage}>
     <JobReseachContainer onResearch={onJobResearch} />
     <div className={styles.offers}>
@@ -47,9 +58,7 @@ const Research: NextPage<ResearchProps> = ({ }) => {
         })}
       </div>
 
-      {
-        jobDetails && (windowWidth > 900 ? <JobDetails job={jobDetails} /> : <Popin shouldOpen={popInOpen} onPopinCrossClicked={() => setPopInOpen(false)} ><JobDetails job={jobDetails} /></Popin>)
-      }
+      {renderJobDetails()}
 
     </div>
 

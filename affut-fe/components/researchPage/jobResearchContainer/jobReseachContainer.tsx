@@ -1,7 +1,7 @@
 import React, { FC, ReactElement, useState } from 'react';
 import styles from './jobReseachContainer.module.scss';
-import Button from '../shared/button/button';
-import Title from '../shared/title/title';
+import Button from '../../shared/button/button';
+import Title from '../../shared/title/title';
 
 type JobSearchContainerProps = {
     onResearch: (jobKeyWord: string, locality: number) => void;
