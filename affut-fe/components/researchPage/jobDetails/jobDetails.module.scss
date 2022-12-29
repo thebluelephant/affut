@@ -1,4 +1,4 @@
-@import '../../styles/variables/colors.module.scss';
+@import '../../../styles/variables/colors.module.scss';
 
 $jobDetails-header : 10vh;
 $jobDetails-footer : 5vh;
@@ -14,8 +14,8 @@ $blocks-margin : 5vh;
     border-radius: 10px;
 
     @media screen and (max-width: 900px) {
-        width: 100%;
-        height: 100%;
+       height: 80vh;
+       width: 100%;
     }
 
     .header {

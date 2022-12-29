@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styles from './jobDetails.module.scss';
-import Button from '../shared/button/button';
-import { PoleEmploiJob } from '../../services/typing/poleemploi.interfaces';
+import Button from '../../shared/button/button';
+import { PoleEmploiJob } from '../../../services/typing/poleemploi.interfaces';
 
 type JobDetailsProps = {
     job: PoleEmploiJob;

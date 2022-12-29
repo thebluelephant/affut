@@ -1,0 +1,17 @@
+@import '../../../styles/variables/colors.module.scss';
+
+.popin-body {
+    height: 150px;
+    width: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__buttons {
+        position: absolute;
+        bottom: 10%;
+        width: 90%;
+        display: flex;
+        justify-content: space-between;
+    }
+}

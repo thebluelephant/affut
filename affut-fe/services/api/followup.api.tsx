@@ -18,3 +18,11 @@ export const updateFollowup: (followup: Followup) => Promise<number> = (followup
         return response.status
     })
 }
+/**
+ * Delete a follow up 
+ */
+export const deleteFollowup: (followupId: string) => Promise<Followup> = (followupId) => {
+    return axios.delete(`${baseApi}/followup/delete/${followupId}`).then((response) => {
+        return response.data
+    })
+}

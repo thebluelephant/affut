@@ -1,0 +1,28 @@
+@import '../../../styles/variables/colors.module.scss';
+
+.text {
+    display: flex;
+    width: 200px;
+
+    @media screen and (max-width: 900px) {
+        width: 100%;
+    }
+
+    &__colName {
+        display: none;
+
+        @media screen and (max-width: 900px) {
+            display: flex;
+            width: 150px;
+        }
+    }
+
+    &__input {
+        width: 200px;
+        height: 30px;
+
+        @media screen and (max-width: 900px) {
+            width: 100%;
+        }
+    }
+}
