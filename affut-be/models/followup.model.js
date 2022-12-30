@@ -24,9 +24,8 @@ Followup.create = (newFollowup, result) => {
 };
 
 Followup.findAllByUserId = (userId, result) => {
-    sql.query(`SELECT * FROM followup WHERE userId = ${userId}`, (err, res) => {
+    sql.query(`SELECT * FROM followup WHERE userId = ?`, userId, (err, res) => {
         if (err) {
-            console.log("error: ", err);
             result(err, null);
             return;
         }
@@ -37,7 +36,7 @@ Followup.findAllByUserId = (userId, result) => {
         }
 
         // not found Followup with the id
-        result({ kind: "not_found" }, null);
+        result(null, []);
     });
 };
 
