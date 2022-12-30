@@ -26,3 +26,12 @@ export const deleteFollowup: (followupId: string) => Promise<Followup> = (follow
         return response.data
     })
 }
+
+/**
+ * Create a follow up 
+ */
+export const createFollowup: (followup: Followup) => Promise<number> = (followup) => {
+    return axios.post(`${baseApi}/followup/new`, followup).then((response) => {
+        return response.status
+    })
+}
