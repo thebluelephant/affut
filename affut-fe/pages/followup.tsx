@@ -1,6 +1,6 @@
 ﻿import { NextPage } from "next";
 import { useEffect, useRef, useState } from "react";
-import { deleteFollowup, getUserFollowUps, updateFollowup } from "../services/api/followup.api";
+import { createFollowup, deleteFollowup, getUserFollowUps, updateFollowup } from "../services/api/followup.api";
 import styles from '../styles/followupPage.module.scss'
 import { Followup } from "../services/typing/followup.interface";
 import { Edit } from "../styles/icons/edit";
@@ -9,6 +9,7 @@ import { Check } from "../styles/icons/check";
 import { Cross } from "../styles/icons/cross";
 import DeleteFollowupPopin from "../components/followupPage/deleteFollowupPopin/deleteFollowupPopin";
 import FollowupTableRow from "../components/followupPage/followupTableRow/followupTableRow";
+import Button from "../components/shared/button/button";
 
 
 interface FollowupProps {
@@ -24,8 +25,52 @@ const Followup: NextPage<FollowupProps> = ({ }) => {
     getUserFollowups();
   }, []);
 
+  // Get follow ups 
   const getUserFollowups = () => {
     getUserFollowUps("2").then((resp) => setFollowUps(resp));
+  }
+
+  // Create follow ups
+  const createNewLine = () => {
+    const newFollowup: Followup = {
+      company: '',
+      applicationDate: '',
+      jobName: '',
+      announceUrl: '',
+      status: 'toSend',
+      userId: '2',
+    }
+    setFollowUps(followups => [newFollowup, ...followups ?? []])
+    setFollowUpInEdition(newFollowup)
+  }
+
+  const deleteNewLine = () => {
+    const initialFollowups = [...followUps ?? []];
+    setFollowUps(initialFollowups.splice(1))
+    setFollowUpInEdition(null);
+  }
+
+  const saveNewFollowup = () => {
+    if (followUpInEdition) {
+      createFollowup(followUpInEdition).then((resp) => {
+        if (resp === 200) {
+          setFollowUpInEdition(null);
+          getUserFollowups();
+        }
+      });
+    }
+  }
+
+  // Edit follow ups 
+  const onEditButtonClick = (followUp: Followup) => {
+    const isCreatingAFollowup = followUpInEdition && !followUpInEdition.id
+
+    //If we click on edit button while creating a new follow up, we cancel this creation
+    if (isCreatingAFollowup) {
+      deleteNewLine();
+    }
+
+    setFollowUpInEdition(followUp);
   }
 
   const saveEditedFollowup = () => {
@@ -39,7 +84,16 @@ const Followup: NextPage<FollowupProps> = ({ }) => {
     }
   }
 
+  // Delete follow ups 
   const onDeleteButtonClick = (followupId: string) => {
+    const isCreatingAFollowup = followUpInEdition && !followUpInEdition.id
+
+    //If we click on delete button while creating a new follow up, we cancel this creation
+    if (isCreatingAFollowup) {
+      deleteNewLine();
+      setFollowUpInEdition(null);
+    }
+
     setFollowUpIdToDelete(followupId);
     deletePopinRef?.current?.openPopin();
   }
@@ -57,6 +111,9 @@ const Followup: NextPage<FollowupProps> = ({ }) => {
   return <div className={styles.followupPage}>
 
     <DeleteFollowupPopin ref={deletePopinRef} onConfirmDeletion={() => deleteAFollowup()} />
+    <div className={styles['followupPage__header']}>
+      <Button title={"Créer"} type={"primary"} onButtonClick={createNewLine} />
+    </div>
 
     <div className={styles['followupPage__table']}>
       <div className={styles['row__header']}>
@@ -74,7 +131,7 @@ const Followup: NextPage<FollowupProps> = ({ }) => {
       {
         followUps?.map((followUp) => {
           const currentLineIsInEdition = followUpInEdition && followUp.id === followUpInEdition?.id;
-
+          const currentLineIsInCreation = followUpInEdition && !followUp.id && !followUpInEdition.id;
           return (
             <>
               <div className={styles.row} key={followUp.id}>
@@ -85,35 +142,41 @@ const Followup: NextPage<FollowupProps> = ({ }) => {
                   })} />
                 </div>
 
-                <div className={styles['row__actions']}>
-                  {
-                    currentLineIsInEdition ?
-                      <>
-                        <div className={`${styles.actionButton} ${styles['actionButton--green']}`} onClick={() => saveEditedFollowup()}>
+                {
+                  <div className={styles['row__actions']}>
+                    {
+                      currentLineIsInEdition || currentLineIsInCreation ?
+                        <>
+                          <div className={`${styles.actionButton} ${styles['actionButton--green']}`} onClick={() => currentLineIsInCreation ? saveNewFollowup() : saveEditedFollowup()}>
+                            <span className={styles.icon}>
+                              <Check color="green" />
+                            </span>
+                          </div>
+                          <div className={`${styles.actionButton} ${styles['actionButton--red']}`}>
+                            <span className={styles.icon} onClick={() => currentLineIsInCreation ? deleteNewLine() : setFollowUpInEdition(null)}>
+                              <Cross color="red" />
+                            </span>
+                          </div>
+                        </>
+                        :
+                        <div className={styles.actionButton} onClick={() => onEditButtonClick(followUp)}>
                           <span className={styles.icon}>
-                            <Check color="green" />
+                            <Edit />
                           </span>
                         </div>
-                        <div className={`${styles.actionButton} ${styles['actionButton--red']}`}>
-                          <span className={styles.icon} onClick={() => setFollowUpInEdition(null)}>
-                            <Cross color="red" />
-                          </span>
-                        </div>
-                      </>
-                      :
-                      <div className={styles.actionButton} onClick={() => setFollowUpInEdition(followUp)}>
+                    }
+                    {
+                      !currentLineIsInCreation && <div className={styles.actionButton} onClick={() => onDeleteButtonClick(followUp.id)}>
                         <span className={styles.icon}>
-                          <Edit />
+                          <Delete />
                         </span>
                       </div>
-                  }
-                  <div className={styles.actionButton} onClick={() => onDeleteButtonClick(followUp.id)}>
-                    <span className={styles.icon}>
-                      <Delete />
-                    </span>
-                  </div>
+                    }
 
-                </div>
+
+                  </div>
+                }
+
               </div>
             </>
           )

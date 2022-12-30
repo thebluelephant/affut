@@ -9,4 +9,10 @@
     &__primary {
         background-color: $primary;
     }
+
+    &__secondary {
+        background-color: transparent;
+        border: solid 2px $primary;
+        color: $primary;
+    }
 }

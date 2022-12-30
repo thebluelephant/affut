@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState, forwardRef, useImperativeHandle } from 'react';
+import React, { useState, forwardRef, useImperativeHandle } from 'react';
 import styles from './deleteFollowupPopin.module.scss';
 import Button from '../../shared/button/button';
 import Popin from '../../shared/popin/popin';
@@ -12,7 +12,7 @@ type DeleteFollowupPopinRef = {
 
 const DeleteFollowupPopin = forwardRef<DeleteFollowupPopinRef, DeleteFollowupPopinProps>(
     ({ onConfirmDeletion }, ref) => {
-        
+
         DeleteFollowupPopin.displayName = 'DeleteFollowupPopin';
         const [popInOpen, setPopInOpen] = useState<boolean>(false);
 
@@ -26,7 +26,7 @@ const DeleteFollowupPopin = forwardRef<DeleteFollowupPopinRef, DeleteFollowupPop
                     <p>Voulez-vous vraiment supprimer ce suivi ?</p>
 
                     <div className={styles['popin-body__buttons']}>
-                        <Button title={'Foui'} type={"primary"} onButtonClick={() => onConfirmDeletion()
+                        <Button title={'Foui'} type={"primary"} onButtonClick={() => { onConfirmDeletion(), setPopInOpen(false) }
                         } />
                         <Button title={'Naon'} type={"primary"} onButtonClick={() => { setPopInOpen(false) }
                         } />
