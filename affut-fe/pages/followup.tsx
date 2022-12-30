@@ -1,4 +1,5 @@
 ﻿import { NextPage } from "next";
+import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { useEffect, useRef, useState } from "react";
 import { createFollowup, deleteFollowup, getUserFollowUps, updateFollowup } from "../services/api/followup.api";
 import styles from '../styles/followupPage.module.scss'
@@ -11,7 +12,6 @@ import DeleteFollowupPopin from "../components/followupPage/deleteFollowupPopin/
 import FollowupTableRow from "../components/followupPage/followupTableRow/followupTableRow";
 import Button from "../components/shared/button/button";
 
-
 interface FollowupProps {
 }
 
@@ -20,6 +20,9 @@ const Followup: NextPage<FollowupProps> = ({ }) => {
   const [followUpInEdition, setFollowUpInEdition] = useState<Followup | null>(null);
   const [followupIdToDelete, setFollowUpIdToDelete] = useState<string | null>(null);
   const deletePopinRef = useRef<{ openPopin: () => void } | null>(null);
+  const userId = typeof window !== 'undefined' ? localStorage.getItem('userId') : null;
+
+
 
   useEffect(() => {
     getUserFollowups();
@@ -27,7 +30,10 @@ const Followup: NextPage<FollowupProps> = ({ }) => {
 
   // Get follow ups 
   const getUserFollowups = () => {
-    getUserFollowUps("2").then((resp) => setFollowUps(resp));
+    if (userId) {
+      getUserFollowUps(userId).then((resp) => setFollowUps(resp));
+
+    }
   }
 
   // Create follow ups
@@ -38,7 +44,7 @@ const Followup: NextPage<FollowupProps> = ({ }) => {
       jobName: '',
       announceUrl: '',
       status: 'toSend',
-      userId: '2',
+      userId: userId ?? '',
     }
     setFollowUps(followups => [newFollowup, ...followups ?? []])
     setFollowUpInEdition(newFollowup)
@@ -186,4 +192,5 @@ const Followup: NextPage<FollowupProps> = ({ }) => {
   </div>;
 };
 
+export const getServerSideProps = withPageAuthRequired();
 export default Followup;

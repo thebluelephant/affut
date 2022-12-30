@@ -1,5 +1,6 @@
 ﻿import { NextPage } from "next";
 import { useState } from "react";
+import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import JobDetails from "../components/researchPage/jobDetails/jobDetails";
 import JobReseachContainer from "../components/researchPage/jobResearchContainer/jobReseachContainer";
 import Popin from "../components/shared/popin/popin";
@@ -65,4 +66,5 @@ const Research: NextPage<ResearchProps> = ({ }) => {
   </div>;
 };
 
+export const getServerSideProps = withPageAuthRequired();
 export default Research;
