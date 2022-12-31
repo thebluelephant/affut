@@ -8,6 +8,10 @@
         &__primary {
             font-family: 'KumbhSans-Bold';
             font-size: 30px;
+
+            @media screen and (max-width: 900px) {
+                font-size: 20px;
+            }
         }
     }
 
@@ -17,6 +21,10 @@
         height: 10px;
         width: 100%;
         background-color: $yellow;
+
+        @media screen and (max-width: 900px) {
+            height: 5px;
+        }
     }
 
 }

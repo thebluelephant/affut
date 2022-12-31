@@ -7,6 +7,10 @@ type JobDetailsProps = {
     job: PoleEmploiJob;
 }
 
+const renderPoleEmploiJobUrl = (jobId: string) => {
+    return `https://candidat.pole-emploi.fr/offres/recherche/detail/${jobId}`
+
+}
 const JobDetails: FC<JobDetailsProps> = ({ job }) => {
     return (
         <div className={`${styles.jobDetails}`}>
@@ -25,9 +29,7 @@ const JobDetails: FC<JobDetailsProps> = ({ job }) => {
             </div>
 
             <div className={`${styles.footer}`}>
-                {
-                    job.contact?.coordonnees1 && <a className={`${styles.originalOffer}`} rel="noreferrer" href={job.contact.coordonnees1} target="_blank">Voir loffre originale</a>
-                }
+                <a className={`${styles.originalOffer}`} rel="noreferrer" href={renderPoleEmploiJobUrl(job.id)} target="_blank">Voir loffre originale</a>
                 <Button title={"Ajouter a ma liste"} type={"primary"} onButtonClick={function (): void {
                     throw new Error("Function not implemented.");
                 }} />
