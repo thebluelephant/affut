@@ -8,21 +8,25 @@ import { searchJobOffers } from "../services/api/poleemploi.api";
 import { useWindowDimensions } from "../services/hooks/windowDimension";
 import { PoleEmploiJob } from "../services/typing/poleemploi.interfaces";
 import styles from '../styles/researchPage.module.scss'
+import { Job } from "../services/typing/job.interface";
+import { getJobs } from "../services/api/rapidapi.api";
 
 
 interface ResearchProps {
 }
 
 const Research: NextPage<ResearchProps> = ({ }) => {
-  const [jobOffers, setJobOffers] = useState<PoleEmploiJob[]>();
-  const [jobDetails, setJobDetails] = useState<PoleEmploiJob>();
+  const [jobOffers, setJobOffers] = useState<Job[]>();
+  const [jobDetails, setJobDetails] = useState<Job>();
   const [popInOpen, setPopInOpen] = useState<boolean>(false);
   const { windowWidth } = useWindowDimensions();
 
   const onJobResearch = (jobKeyWord: string, locality: number) => {
     searchJobOffers(jobKeyWord, locality)
       .then((offers) => {
-        setJobOffers(offers)
+        const apiJobs = getJobs();
+        const allOffers = apiJobs.concat(offers)
+        setJobOffers(allOffers)
         setJobDetails(offers[0])
       })
   }

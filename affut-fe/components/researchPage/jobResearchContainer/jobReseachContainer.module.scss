@@ -1,23 +1,69 @@
 @import '../../../styles/variables/colors.module.scss';
 
-.jobReseachContainer{
+.jobReseachContainer {
     width: 90%;
     height: 5vh;
-    padding : 30px 10px;
+    padding: 30px 10px;
     background-color: $white-transparent;
     border-radius: 10;
     display: flex;
-    align-items: center; 
+    align-items: center;
     justify-content: space-between;
     gap: 10px;
-    
+
+
+    @media screen and (max-width: 900px) {
+        flex-direction: column;
+        height: unset;
+        padding: 20px 10px;
+    }
+
     .title {
         width: 1000px;
+
+        @media screen and (max-width: 900px) {
+            width: 100%;
+        }
+    }
+
+    .postalCode {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        list-style-type: none;
+
+        li {
+            position: absolute;
+            top: 50px;
+            background-color: #949294db;
+            border-radius: 10px;
+            width: 100%;
+            color: white;
+
+            &::marker {
+                display: none;
+            }
+
+            ul {
+                padding: 10px;
+                margin: 5px 0;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #868586f6;
+                }
+            }
+        }
     }
 
     input {
         width: 100%;
         padding: 10px;
+
+        @media screen and (max-width: 900px) {
+            padding: 5px;
+        }
     }
 
 }

@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { PoleEmploiJob, PoleEmploiToken } from '../typing/poleemploi.interfaces';
+import { Job } from '../typing/job.interface';
+import { PoleEmploiToken } from '../typing/poleemploi.interfaces';
 
 /**
  * @returns Pole emploi access token for job offers API
@@ -28,7 +29,7 @@ export const getJobOfferApiToken: () => Promise<PoleEmploiToken> = () => {
  * @returns job offers list
  * 
  */
-export const searchJobOffers = (jobKeyWord?: string, locality?: number): Promise<PoleEmploiJob[]> => {
+export const searchJobOffers = (jobKeyWord?: string, locality?: number): Promise<Job[]> => {
     return getJobOfferApiToken().then((tokenData) => {
         const token = `${tokenData.token_type} ${tokenData.access_token}`;
         let url = `${process.env.NEXT_PUBLIC_POLEEMPLOI_JOBOFFERAPI}/offres/search?`;

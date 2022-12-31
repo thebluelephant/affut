@@ -20,6 +20,10 @@ $blocks-margin : 5vh;
         margin-top: 2vh;
 
 
+        @media screen and (max-width: 900px) {
+            height: calc(100vh - 35vh);
+        }
+
         &__jobs {
             width: 48vw;
             overflow: auto;
@@ -63,6 +67,6 @@ $blocks-margin : 5vh;
             }
         }
 
-        
+
     }
 }
