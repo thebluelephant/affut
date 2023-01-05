@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
 import styles from './jobDetails.module.scss';
 import Button from '../../shared/button/button';
-import { PoleEmploiJob } from '../../../services/typing/poleemploi.interfaces';
+import { Job } from '../../../services/typing/job.interface';
 
 type JobDetailsProps = {
-    job: PoleEmploiJob;
+    job: Job;
 }
 
 const renderPoleEmploiJobUrl = (jobId: string) => {

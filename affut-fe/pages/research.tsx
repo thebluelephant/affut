@@ -2,14 +2,12 @@
 import { useState } from "react";
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import JobDetails from "../components/researchPage/jobDetails/jobDetails";
+import { searchJobOffers } from "../services/api/jobs.api";
 import JobReseachContainer from "../components/researchPage/jobResearchContainer/jobReseachContainer";
 import Popin from "../components/shared/popin/popin";
-import { searchJobOffers } from "../services/api/poleemploi.api";
 import { useWindowDimensions } from "../services/hooks/windowDimension";
-import { PoleEmploiJob } from "../services/typing/poleemploi.interfaces";
 import styles from '../styles/researchPage.module.scss'
 import { Job } from "../services/typing/job.interface";
-import { getJobs } from "../services/api/rapidapi.api";
 
 
 interface ResearchProps {
@@ -24,16 +22,14 @@ const Research: NextPage<ResearchProps> = ({ }) => {
   const onJobResearch = (jobKeyWord: string, locality: number) => {
     searchJobOffers(jobKeyWord, locality)
       .then((offers) => {
-        const apiJobs = getJobs();
-        const allOffers = apiJobs.concat(offers)
-        setJobOffers(allOffers)
+        setJobOffers(offers)
         setJobDetails(offers[0])
       })
   }
 
-  const selectJobOffer = (offer: PoleEmploiJob) => {
+  const selectJobOffer = (offer: Job) => {
     setJobDetails(offer);
-    if (windowWidth < 900) {
+    if (windowWidth && windowWidth < 900) {
       setPopInOpen(true);
     }
   }
