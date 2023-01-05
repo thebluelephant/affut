@@ -21,6 +21,7 @@ app.get("/", (req, res) => {
 });
 
 require("./routes/followup.routes")(app);
+require("./routes/jobs.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
