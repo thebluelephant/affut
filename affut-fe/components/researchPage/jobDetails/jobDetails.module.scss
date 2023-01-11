@@ -40,6 +40,7 @@ $blocks-margin : 5vh;
     .body {
         overflow: auto;
         height: calc(100% - $jobDetails-footer - $jobDetails-header - $blocks-margin);
+        white-space: pre-wrap;
     }
 
     .footer {

@@ -1,4 +1,4 @@
-
+const formatter = require('../utils/formatter.utils');
 /**
  * 
  * @param {*} rapidJobs[]
@@ -8,17 +8,17 @@ exports.formatRapidJobToJob = (rapidJobs) => {
     return rapidJobs.map(job => {
         return {
             id: job.job_id,
-            intitule: job.job_title,
+            intitule: formatter.capitalize(job.job_title),
             description: job.job_description,
             dateCreation: job.job_posted_at_datetime_utc,
             lieuTravail: {
-                libelle: job.job_city,
+                libelle: formatter.capitalize(job.job_city),
                 latitude: job.job_latitude,
                 longitude: job.job_longitude,
-                commune: job.job_city
+                commune: formatter.capitalize(job.job_city)
             },
             entreprise: {
-                nom: job.employer_name,
+                nom: formatter.capitalize(job.employer_name),
                 logo: job.employer_logo,
                 url: job.employer_website
             },
@@ -36,4 +36,27 @@ exports.formatRapidJobToJob = (rapidJobs) => {
             }
         }
     })
+}
+
+/**
+ * 
+ * @param {*} poleEmploiJobs[]
+ * @returns A list of jobs formatted
+ */
+exports.formatPoleEmploiToJob = (poleEmploiJobs) => {
+
+    return poleEmploiJobs.map(job => {
+        return {
+            ...job,
+            intitule: formatter.capitalize(job.intitule),
+            lieuTravail: {
+                libelle: formatter.capitalize(job.lieuTravail.libelle),
+                commune: formatter.capitalize(job.lieuTravail.commune)
+            },
+            entreprise: {
+                nom: formatter.capitalize(job.entreprise.nom)
+            }
+        };
+    });
+
 }

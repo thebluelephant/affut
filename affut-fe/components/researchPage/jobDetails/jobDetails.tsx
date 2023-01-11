@@ -5,13 +5,12 @@ import { Job } from '../../../services/typing/job.interface';
 
 type JobDetailsProps = {
     job: Job;
+    onUserCandidates : (job : Job) => void;
 }
 
-const renderPoleEmploiJobUrl = (jobId: string) => {
-    return `https://candidat.pole-emploi.fr/offres/recherche/detail/${jobId}`
 
-}
-const JobDetails: FC<JobDetailsProps> = ({ job }) => {
+
+const JobDetails: FC<JobDetailsProps> = ({ job, onUserCandidates }) => {
     return (
         <div className={`${styles.jobDetails}`}>
             <div className={`${styles.header}`}>
@@ -29,10 +28,8 @@ const JobDetails: FC<JobDetailsProps> = ({ job }) => {
             </div>
 
             <div className={`${styles.footer}`}>
-                <a className={`${styles.originalOffer}`} rel="noreferrer" href={renderPoleEmploiJobUrl(job.id)} target="_blank">Voir loffre originale</a>
-                <Button title={"Ajouter a ma liste"} type={"primary"} onButtonClick={function (): void {
-                    throw new Error("Function not implemented.");
-                }} />
+                <a className={`${styles.originalOffer}`} rel="noreferrer" href={job.origineOffre.urlOrigine} target="_blank">Voir l'offre originale</a>
+                <Button title={"Candidater sur Pole emploi et ajouter à mes suivis"} type={"primary"} onButtonClick={() => onUserCandidates(job)} />
             </div>
         </div>
     )
