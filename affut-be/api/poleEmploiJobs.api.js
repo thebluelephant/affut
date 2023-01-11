@@ -1,4 +1,5 @@
 const axios = require('axios');
+const jobUtils = require('../utils/jobs.utils');
 require('dotenv').config();
 
 /**
@@ -32,7 +33,6 @@ exports.searchJobOffers = (jobKeyWord, locality) => {
     return this.getJobOfferApiToken().then((tokenData) => {
         const token = `${tokenData.token_type} ${tokenData.access_token}`;
         let url = process.env.POLEEMPLOI_JOBOFFERAPI;
-
         if (locality) {
             url += `&commune=${locality}`
         }
@@ -45,7 +45,7 @@ exports.searchJobOffers = (jobKeyWord, locality) => {
                 Authorization: token
             }
         }).then((response) => {
-            return response.data.resultats
+            return jobUtils.formatPoleEmploiToJob(response.data.resultats)
         })
     })
 

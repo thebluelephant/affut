@@ -8,13 +8,12 @@ exports.create = (req, res) => {
             message: "Content can not be empty!"
         });
     }
-
     // Create a Followup
     const followup = new Followup({
         company: req.body.company,
         applicationDate: req.body.applicationDate,
         jobName: req.body.jobName,
-        announceUrl: req.body.announceUrl | null,
+        announceUrl: req.body.announceUrl ?? null,
         status: req.body.status,
         userId: req.body.userId
     });
