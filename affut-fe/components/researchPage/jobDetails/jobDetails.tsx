@@ -9,7 +9,6 @@ type JobDetailsProps = {
 }
 
 
-
 const JobDetails: FC<JobDetailsProps> = ({ job, onUserCandidates }) => {
     return (
         <div className={`${styles.jobDetails}`}>

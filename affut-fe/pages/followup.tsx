@@ -11,6 +11,7 @@ import { Cross } from "../styles/icons/cross";
 import DeleteFollowupPopin from "../components/followupPage/deleteFollowupPopin/deleteFollowupPopin";
 import FollowupTableRow from "../components/followupPage/followupTableRow/followupTableRow";
 import Button from "../components/shared/button/button";
+import BinaryPopin from "../components/shared/binaryPopin/binaryPopin";
 
 interface FollowupProps {
 }
@@ -116,7 +117,7 @@ const Followup: NextPage<FollowupProps> = ({ }) => {
 
   return <div className={styles.followupPage}>
 
-    <DeleteFollowupPopin ref={deletePopinRef} onConfirmDeletion={() => deleteAFollowup()} />
+    <BinaryPopin ref={deletePopinRef} onConfirm={() => deleteAFollowup()} text="Voulez-vous vraiment supprimer ce suivi ?" />
     <div className={styles['followupPage__header']}>
       <Button title={"Créer"} type={"primary"} onButtonClick={createNewLine} />
     </div>

@@ -1,19 +1,20 @@
 import React, { useState, forwardRef, useImperativeHandle } from 'react';
-import styles from './deleteFollowupPopin.module.scss';
-import Button from '../../shared/button/button';
-import Popin from '../../shared/popin/popin';
+import styles from './binaryPopin.module.scss';
+import Button from '../button/button';
+import Popin from '../popin/popin';
 
-type DeleteFollowupPopinProps = {
-    onConfirmDeletion: () => void;
+type BinaryPopinProps = {
+    text: string,
+    onConfirm: () => void;
 }
-type DeleteFollowupPopinRef = {
+type BinaryPopinRef = {
     openPopin: () => void;
 }
 
-const DeleteFollowupPopin = forwardRef<DeleteFollowupPopinRef, DeleteFollowupPopinProps>(
-    ({ onConfirmDeletion }, ref) => {
+const BinaryPopin = forwardRef<BinaryPopinRef, BinaryPopinProps>(
+    ({ onConfirm, text }, ref) => {
 
-        DeleteFollowupPopin.displayName = 'DeleteFollowupPopin';
+        BinaryPopin.displayName = 'BinaryPopin';
         const [popInOpen, setPopInOpen] = useState<boolean>(false);
 
         useImperativeHandle(ref, () => ({
@@ -23,10 +24,10 @@ const DeleteFollowupPopin = forwardRef<DeleteFollowupPopinRef, DeleteFollowupPop
         return (
             <Popin shouldOpen={popInOpen} onPopinCrossClicked={() => setPopInOpen(false)}>
                 <div className={styles['popin-body']}>
-                    <p>Voulez-vous vraiment supprimer ce suivi ?</p>
+                    <p>{text}</p>
 
                     <div className={styles['popin-body__buttons']}>
-                        <Button title={'Foui'} type={"primary"} onButtonClick={() => { onConfirmDeletion(), setPopInOpen(false) }
+                        <Button title={'Foui'} type={"primary"} onButtonClick={() => { onConfirm(), setPopInOpen(false) }
                         } />
                         <Button title={'Naon'} type={"primary"} onButtonClick={() => { setPopInOpen(false) }
                         } />
@@ -37,4 +38,4 @@ const DeleteFollowupPopin = forwardRef<DeleteFollowupPopinRef, DeleteFollowupPop
     }
 );
 
-export default DeleteFollowupPopin;
+export default BinaryPopin;
