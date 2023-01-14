@@ -10,6 +10,7 @@ export const getUserFollowUps: (userId: string) => Promise<Followup[]> = (userId
         return response.data
     })
 }
+
 /**
  * Update a follow up 
  */
@@ -35,3 +36,15 @@ export const createFollowup: (followup: Followup) => Promise<number> = (followup
         return response.status
     })
 }
+
+export const hasUserAlreadyCandidates: (userId: string, company: string, jobName: string) => Promise<boolean> = (userId, company, jobName) => {
+    const data = {
+        userId: userId,
+        company: company,
+        jobName: jobName
+    }
+    return axios.post(`${baseApi}/followup/hasUserAlreadyCandidates`, data).then((response) => {
+        return response.data
+    })
+}
+

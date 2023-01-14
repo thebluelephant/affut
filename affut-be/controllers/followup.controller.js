@@ -42,6 +42,30 @@ exports.findAllByUserId = (req, res) => {
     });
 };
 
+// Has user already candidates to an offer with same job name and company
+exports.hasUserAlreadyCandidates = (req, res) => {
+    const userId = req.body.userId
+    const company = req.body.company
+    const jobName = req.body.jobName;
+
+    // Validate request
+    if (!req.body) {
+        res.status(400).send({
+            message: "Content can not be empty!"
+        });
+    }
+    Followup.findFollowupSumupByUserId(company, jobName, userId, (err, data) => {
+        if (err && err.length) {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving sum ups."
+            });
+        } else if (data) {
+            res.send(true)
+        } else res.send(false)
+    });
+}
+
 // Update a followup identified by the id in the request
 exports.update = (req, res) => {
     // Validate Request

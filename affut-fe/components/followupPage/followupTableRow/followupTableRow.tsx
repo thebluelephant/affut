@@ -17,7 +17,7 @@ const FollowupTableRow: FC<FollowupTableRowProps> = ({ followup, followUpInEditi
         const data = followUpInEdition && followUpInEdition[colHeader as keyof typeof followUpInEdition];
 
         if (colHeader === "status") {
-            return <select className={styles['text__select']} name="status" onChange={(e) => { setFollowUpInEdition(colHeader, e.target.value) }}>
+            return <select value={data ?? 'toSend'} className={styles['text__select']} name="status" onChange={(e) => { setFollowUpInEdition(colHeader, e.target.value) }}>
                 <option value="toSend">A envoyer</option>
                 <option value="sent">Candidature envoyée</option>
                 <option value="meetingPlanned">Entretien planifié</option>

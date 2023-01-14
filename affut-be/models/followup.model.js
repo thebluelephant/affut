@@ -40,6 +40,32 @@ Followup.findAllByUserId = (userId, result) => {
     });
 };
 
+/**
+ * Find a user follow up thanks to its ID, the company and jobName followup 
+ * @param {*} company 
+ * @param {*} jobName 
+ * @param {*} userId 
+ * @param {*} result 
+ */
+Followup.findFollowupSumupByUserId = (company, jobName, userId, result) => {
+    sql.query(`SELECT * FROM followup WHERE userId = ? AND company = ? AND jobName = ?`, [userId, company, jobName], (err, res) => {
+        if (err) {
+            console.log(err);
+            result(err, null);
+            return;
+        }
+
+
+        if (res.length) {
+            result(null, res);
+            return;
+        }
+
+        // not found Followup with the id
+        result([]);
+    });
+}
+
 
 Followup.updateById = (id, followup, result) => {
     sql.query(

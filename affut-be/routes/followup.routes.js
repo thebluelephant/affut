@@ -9,8 +9,10 @@ module.exports = app => {
   // Update a followup 
   router.put("/update/:id", followup.update);
 
-  // Retrieve a single followup with id
+  // Retrieve followups with user id
   router.get("/getByUserId/:userId", followup.findAllByUserId);
+
+  router.post("/hasUserAlreadyCandidates", followup.hasUserAlreadyCandidates);
 
   // Delete a single followup with its ID 
   router.delete("/delete/:id", followup.delete);

@@ -45,7 +45,7 @@ exports.formatRapidJobToJob = (rapidJobs) => {
  */
 exports.formatPoleEmploiToJob = (poleEmploiJobs) => {
 
-    return poleEmploiJobs.map(job => {
+    return poleEmploiJobs?.map(job => {
         return {
             ...job,
             intitule: formatter.capitalize(job.intitule),
