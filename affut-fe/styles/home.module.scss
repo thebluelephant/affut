@@ -1,0 +1,298 @@
+@import './variables/colors.module.scss';
+
+.home {
+    height: 100%;
+
+    .subscribePopin {
+        width: 100%;
+        height: 100%;
+        background: #32244370;
+        z-index: 10;
+        position: fixed;
+        left: 0;
+        top: 0;
+
+        .container {
+            width: 600px;
+            height: 350px;
+            background-color: white;
+            position: absolute;
+            z-index: 3;
+            left: calc(50% - 300px);
+            top: calc(50% - 230px);
+            border-radius: 20px;
+            box-shadow: 5px 5px 10px #0000002b;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+
+            @media screen and (max-width: 900px) {
+                width: 90%;
+                margin: 0 auto;
+                position: sticky;
+            }
+
+            &__header {
+                .logo {
+                    padding-top: 45px;
+                }
+
+                .cross {
+                    position: absolute;
+                    right: 10px;
+                    top: 10px;
+                    background: white;
+                    height: 30px;
+                    width: 30px;
+                    border-radius: 50px;
+                    box-shadow: 3px 2px 5px rgb(0 0 0 / 24%);
+                    cursor: pointer;
+                }
+
+                @media screen and (max-width: 900px) {
+                    width: 90%;
+                    position: sticky;
+                    display: flex;
+                    justify-content: center;
+                }
+
+                .button {
+
+                    @media screen and (max-width: 900px) {
+                        position: absolute;
+                        bottom: 35%;
+                    }
+
+                }
+            }
+
+
+
+            &__body {
+                display: flex;
+                flex-direction: column;
+                height: 80%;
+                width: 100%;
+                justify-content: space-evenly;
+                align-items: center;
+                text-align: center;
+
+
+                .slogan {
+                    font-size: 17px;
+
+                    &--bold {
+                        font-family: 'KumbhSans-Bold';
+                    }
+
+                    @media screen and (max-width: 900px) {
+                        padding: 0 10px;
+                    }
+                }
+
+                input {
+                    width: 70%;
+                    height: 50px;
+                    border-bottom: unset !important;
+                    border: solid 1px $primary !important;
+                    border-radius: 20px;
+                    padding: 5px 15px;
+                }
+            }
+        }
+    }
+
+
+
+    &__header {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+
+        .logo {
+            height: 50px;
+
+            @media screen and (max-width: 900px) {
+                position: absolute;
+                top: 10px;
+                height: 60px;
+
+            }
+        }
+
+        .button {
+            @media screen and (max-width: 900px) {
+                position: absolute;
+                bottom: 30%;
+
+            }
+
+            @media screen and (max-width: 300px) {
+                text-align: center;
+                font-size: 22px;
+            }
+        }
+
+        @media screen and (max-width: 900px) {
+            justify-content: center;
+            position: relative;
+            top: 0;
+            font-size: 25px;
+            height: 100%;
+            z-index: 3;
+        }
+    }
+
+    .title {
+        display: flex;
+        position: absolute;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        font-size: 50px;
+        font-family: 'KumbhSans-Bold';
+        top: 20%;
+
+        @media screen and (max-width: 900px) {
+            text-align: center;
+            font-size: 40px;
+            padding: 0 10px;
+            top: 30%;
+        }
+
+        @media screen and (max-width: 450px) {
+            font-size: 30px;
+        }
+
+        @media screen and (max-width: 300px) {
+            font-size: 25px;
+        }
+
+        &__firstLine {
+            &--primary {
+                color: $primary;
+            }
+        }
+
+        &__secondLine {
+            position: relative;
+
+            .text {
+                position: relative;
+                z-index: 2;
+
+                &__primary {
+                    font-family: 'KumbhSans-Bold';
+                    font-size: 30px;
+
+                    @media screen and (max-width: 900px) {
+                        font-size: 20px;
+                    }
+
+                }
+            }
+
+            .underline {
+                position: absolute;
+                bottom: 5px;
+                height: 15px;
+                width: 100%;
+                background-color: $yellow;
+
+                @media screen and (max-width: 900px) {
+                    height: 10px;
+                    left: 0;
+                }
+            }
+        }
+    }
+
+    .images {
+        height: 55%;
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+
+        @media screen and (max-width: 900px) {
+            height: 100%;
+        }
+
+        &__first {
+            height: 265px;
+            border-radius: 170px;
+            position: absolute;
+            left: 25%;
+            top: 10%;
+
+            @media screen and (max-width: 900px) {
+                height: 80px;
+                top: 17%;
+                left: 6%;
+            }
+
+            @media screen and (max-width: 300px) {
+                display: none;
+            }
+        }
+
+        &__second {
+            height: 130px;
+            border-radius: 150px;
+            position: absolute;
+            bottom: 23%;
+            left: 10%;
+
+            @media screen and (max-width: 900px) {
+                height: 60px;
+                left: unset;
+                right: 10%;
+                bottom: -1%;
+            }
+        }
+
+        &__third {
+            height: 200px;
+            border-radius: 200px;
+            right: 25%;
+            bottom: 20%;
+            position: absolute;
+
+            @media screen and (max-width: 900px) {
+                height: 150px;
+                right: unset;
+                bottom: 5%;
+                left: -10%;
+            }
+
+            @media screen and (max-width: 300px) {
+                height: 115px;
+            }
+
+
+        }
+
+        &__fourth {
+            height: 150px;
+            border-radius: 150px;
+            position: absolute;
+            right: 10%;
+            top: 0;
+
+            @media screen and (max-width: 900px) {
+                height: 80px;
+                top: 10%;
+                right: 13%;
+            }
+
+            @media screen and (max-width: 300px) {
+                height: 50px;
+                top: 10%
+            }
+
+        }
+
+    }
+}
