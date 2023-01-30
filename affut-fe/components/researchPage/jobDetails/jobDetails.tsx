@@ -5,7 +5,7 @@ import { Job } from '../../../services/typing/job.interface';
 
 type JobDetailsProps = {
     job: Job;
-    onUserCandidates : (job : Job) => void;
+    onUserCandidates: (job: Job) => void;
 }
 
 
@@ -27,7 +27,7 @@ const JobDetails: FC<JobDetailsProps> = ({ job, onUserCandidates }) => {
             </div>
 
             <div className={`${styles.footer}`}>
-                <a className={`${styles.originalOffer}`} rel="noreferrer" href={job.origineOffre.urlOrigine} target="_blank">Voir l'offre originale</a>
+                <a className={`${styles.originalOffer}`} rel="noreferrer" href={job.origineOffre.urlOrigine} target="_blank">{"Voir l'offre originale"}</a>
                 <Button title={"Candidater sur Pole emploi et ajouter à mes suivis"} type={"primary"} onButtonClick={() => onUserCandidates(job)} />
             </div>
         </div>

@@ -1,22 +1,32 @@
 ﻿import { NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Button from "../components/shared/button/button";
 import { Cross } from "../styles/icons/cross";
 import { postNewEmail } from "../services/api/mailChimp";
 import styles from '../styles/home.module.scss';
+import JSConfetti from 'js-confetti';
+import Head from "next/head";
+
+
 interface HomeProps {
 }
 
 const Home: NextPage<HomeProps> = ({ }) => {
   const [openSubscriptionPopin, setOpenSubscriptionPopin] = useState(false);
   const [userMail, setUserMail] = useState('')
+  let jsConfetti: JSConfetti;
+
+  if (typeof window !== 'undefined') {
+    jsConfetti = new JSConfetti()
+  }
 
   const userSubscribes = () => {
     if (userMail.length) {
       postNewEmail(userMail).then((resp) => {
         if (resp.status === 200) {
-          setOpenSubscriptionPopin(false)
+          jsConfetti.addConfetti()
           setUserMail('')
+          setOpenSubscriptionPopin(false)
         }
       })
     }
@@ -40,6 +50,14 @@ const Home: NextPage<HomeProps> = ({ }) => {
   </div >
 
   return <div className={styles.home}>
+    <Head>
+      <title>Affut - Trouvez, postulez, suivez vos candidatures au même endroit ! </title>
+      <meta
+        name="description"
+        content="Avec Affut, la recherche d'emploi n'a jamais été aussi simple : Trouvez, postulez, suivez vos candidatures au même endroit et décrochez votre job de rêve !  "
+        key="desc"
+      />
+    </Head>
     {openSubscriptionPopin && subscribingPopin}
 
     <div className={styles['home__header']}>
@@ -51,12 +69,13 @@ const Home: NextPage<HomeProps> = ({ }) => {
     </div>
 
     <div className={styles.title}>
-      <p className={styles['title__firstLine']}>Trouvez, postulez, <span className={styles['title__firstLine--primary']}>suivez vos candidatures</span>  </p>
-      <span className={styles['title__secondLine']}>
+      <p className={styles['title__firstLine']}>Avec Affut</p>
+      <p className={styles['title__secondLine']}>Trouvez, postulez, <span className={styles['title__secondLine--primary']}>suivez vos candidatures</span>  </p>
+      <span className={styles['title__thirdLine']}>
         <span className={`${styles.underline}`} />
         <p className={`${styles.text}`}>au même endroit</p>
       </span>
-      <p className={styles['title__thirdLine']}>et décrochez votre job de rêve ! </p>
+      <p className={styles['title__fourthLine']}>(et décrochez votre job de rêve !) </p>
     </div>
 
     <div className={styles.images}>

@@ -1,5 +1,15 @@
 @import './variables/colors.module.scss';
 
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
 .home {
     height: 100%;
 
@@ -11,6 +21,7 @@
         position: fixed;
         left: 0;
         top: 0;
+        animation: fadeIn 1s;
 
         .container {
             width: 600px;
@@ -171,13 +182,13 @@
             font-size: 25px;
         }
 
-        &__firstLine {
+        &__secondLine {
             &--primary {
                 color: $primary;
             }
         }
 
-        &__secondLine {
+        &__thirdLine {
             position: relative;
 
             .text {
@@ -207,6 +218,11 @@
                     left: 0;
                 }
             }
+        }
+
+        &__fourthLine {
+            font-size: 18px;
+            margin-top: 15px;
         }
     }
 

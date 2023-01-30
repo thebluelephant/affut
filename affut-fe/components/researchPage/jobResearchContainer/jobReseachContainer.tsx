@@ -15,15 +15,15 @@ const JobReseachContainer: FC<JobSearchContainerProps> = ({ onResearch }): React
     const [localitySuggestions, setLocalitySuggestions] = useState<{ city: string, code: number }[]>([])
 
 
-    const onLocalityChange = (e) => {
-        setLocality(e.target.value);
-        getSuggestions(e);
+    const onLocalityChange = (value: string | React.SetStateAction<{ city: string; code: number; }>) => {
+        setLocality(value);
+        getSuggestions(value);
     }
 
-    const getSuggestions = debounce((e) => {
-        if (e.target.value.length > 3) {
-            getCityPostalCode(e.target.value).then((resp) => setLocalitySuggestions(resp))
-        } else if (e.target.value.length === 0) {
+    const getSuggestions = debounce((value) => {
+        if (value.length > 3) {
+            getCityPostalCode(value).then((resp) => setLocalitySuggestions(resp))
+        } else if (value.length === 0) {
             setLocalitySuggestions([])
         }
     }, 500)
@@ -35,7 +35,7 @@ const JobReseachContainer: FC<JobSearchContainerProps> = ({ onResearch }): React
             </div>
             <input type="text" placeholder='Intitulé du job' onChange={(e) => setJobKeyWord(e.target.value)} />
             <div className={styles.postalCode}>
-                <input type="text" placeholder='Code postale' onChange={onLocalityChange} value={locality?.city} />
+                <input type="text" placeholder='Code postale' onChange={(e) => onLocalityChange(e.target.value)} value={locality?.city} />
                 <li >
                     {localitySuggestions.map((suggestion) => <ul onClick={() => { setLocality(suggestion), setLocalitySuggestions([]) }} key={suggestion.code}>{suggestion.city}</ul>)}
                 </li>
