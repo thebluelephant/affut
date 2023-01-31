@@ -25,7 +25,7 @@ const Research: NextPage<ResearchProps> = ({ }) => {
   const [pendingFollowup, setPendingFollowup] = useState<Followup>();
   const { windowWidth } = useWindowDimensions();
   const alreadyCandidatesPopin = useRef<{ openPopin: () => void } | null>(null);
-  const userId = localStorage.getItem('userId');
+  const userId = typeof window !== 'undefined' ? localStorage.getItem('userId') : null;
 
   const onJobResearch = (jobKeyWord: string, locality: number) => {
     const verifiedLocality = locality > 0 ? locality : undefined

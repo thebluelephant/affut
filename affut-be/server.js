@@ -2,9 +2,8 @@ const express = require("express");
 const cors = require("cors");
 
 const app = express();
-
-var corsOptions = {
-  origin: "http://localhost:8081"
+const corsOptions = {
+  origin: ["http://localhost:8081", "http://localhost:3000", "https://billing.stripe.com"]
 };
 
 app.use(cors(corsOptions));
@@ -22,6 +21,7 @@ app.get("/", (req, res) => {
 
 require("./routes/followup.routes")(app);
 require("./routes/jobs.routes")(app);
+require("./routes/stripe.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

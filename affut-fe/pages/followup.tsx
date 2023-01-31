@@ -153,24 +153,24 @@ const Followup: NextPage<FollowupProps> = ({ }) => {
                   <div className={styles['row__actions']}>
                     {
                       currentLineIsInEdition || currentLineIsInCreation ?
-                        <>
-                          <div className={`${styles.actionButton} ${styles['actionButton--green']}`} onClick={() => currentLineIsInCreation ? saveNewFollowup() : saveEditedFollowup()}>
-                            <span className={styles.icon}>
-                              <Check color="green" />
-                            </span>
-                          </div>
-                          <div className={`${styles.actionButton} ${styles['actionButton--red']}`}>
-                            <span className={styles.icon} onClick={() => currentLineIsInCreation ? deleteNewLine() : setFollowUpInEdition(null)}>
-                              <Cross color="red" />
-                            </span>
-                          </div>
-                        </>
+                          <>
+                            <div className={`${styles.actionButton} ${styles['actionButton--green']}`} onClick={() => currentLineIsInCreation ? saveNewFollowup() : saveEditedFollowup()}>
+                              <span className={styles.icon}>
+                                <Check color="green" />
+                              </span>
+                            </div>
+                            <div className={`${styles.actionButton} ${styles['actionButton--red']}`}>
+                              <span className={styles.icon} onClick={() => currentLineIsInCreation ? deleteNewLine() : setFollowUpInEdition(null)}>
+                                <Cross color="red" />
+                              </span>
+                            </div>
+                          </>
                         :
-                        <div className={styles.actionButton} onClick={() => onEditButtonClick(followUp)}>
-                          <span className={styles.icon}>
-                            <Edit />
-                          </span>
-                        </div>
+                          <div className={styles.actionButton} onClick={() => onEditButtonClick(followUp)}>
+                            <span className={styles.icon}>
+                              <Edit />
+                            </span>
+                          </div>
                     }
                     {
                       !currentLineIsInCreation && <div className={styles.actionButton} onClick={() => onDeleteButtonClick(followUp.id)}>
