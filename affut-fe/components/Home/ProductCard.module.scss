@@ -1,0 +1,40 @@
+@import '../../styles/variables/colors.module.scss';
+
+.productCard {
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    background: white;
+    padding: 10px 15px;
+    border-radius: 10px;
+    justify-content: space-between;
+
+    &__details {
+        height: 30%;
+        text-align: center;
+
+        .price {
+            font-size: 35px;
+        }
+    }
+
+    &__advantages {
+        list-style: none;
+        height: 40%;
+        padding: 0;
+
+        .advantage {
+            display: flex;
+            margin-bottom: 10px;
+
+            svg {
+                height: 20px;
+                margin-right: 5px;
+            }
+        }
+    }
+
+    &__button {
+        text-align: center;
+    }
+}

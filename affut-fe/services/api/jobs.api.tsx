@@ -11,15 +11,15 @@ const baseApi = process.env.NEXT_PUBLIC_APP_API
  * 
  */
 export const searchJobOffers = (jobKeyWord?: string, locality?: number): Promise<Job[]> => {
-    let url = `${baseApi}/jobs/getJobsBy?`;
-    if (jobKeyWord) {
-        url += `&jobName=${jobKeyWord}`
-    }
-    if (locality) {
-        url += `&locality=${locality}`
-    }
-    return axios.get(url).then((response) => {
-        return response.data
-    })
+  let url = `${baseApi}/jobs/getJobsBy?`;
+  if (jobKeyWord) {
+    url += `&jobName=${jobKeyWord}`
+  }
+  if (locality) {
+    url += `&locality=${locality}`
+  }
+  return axios.get(url).then((response) => {
+    return response.data
+  })
 
 }

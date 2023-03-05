@@ -54,13 +54,10 @@ Followup.findFollowupSumupByUserId = (company, jobName, userId, result) => {
             result(err, null);
             return;
         }
-
-
         if (res.length) {
             result(null, res);
             return;
         }
-
         // not found Followup with the id
         result([]);
     });

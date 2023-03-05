@@ -16,6 +16,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <Image className='background-texture' src="/background-texture.png" alt="background texture" fill
           objectFit='cover'
           quality={100} />
+
       </div>
     </>
   </UserProvider>
