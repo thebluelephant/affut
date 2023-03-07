@@ -9,17 +9,17 @@ export const createSubscription = (subscription : Subscription, authUserId : str
 }
 
 // Creates portal for a subscribed user once he has a subscription
-export const createUserSubscriptionPortal = (stripeSessionId : string) => {
-  return axios.post(`${API}/create-portal-session`, {session_id : stripeSessionId}).then((response) => response)
+export const createUserSubscriptionPortal = (userStripeId : string) => {
+  return axios.post(`${API}/create-portal-session`, {userStripeId : userStripeId}).then((response) => response)
 }
 
 // Update auth0 user metadata with the customer stripe ID
-export const updateUserMetadata = (stripeSessionId : string, authUserId : string) => {
-  return axios.patch(`${API}/user-metadata`, {stripeSessionId : stripeSessionId, authUserId : authUserId}).then((response) => console.log(response))
+export const updateUserMetadata = (stripeSessionId : string | null, authUserId : string) => {
+  return axios.patch(`${API}/user-metadata`, {stripeSessionId : stripeSessionId, authUserId : authUserId}).then((response) => response)
 }
 
 // Get list of user's products name owned
-export const getUserSubscriptions = (stripeUserId : string) => {
+export const getUserSubscriptions = (stripeUserId : string) : Promise<string[]>  => {
   return axios.post(`${process.env.NEXT_PUBLIC_LOCAL_API}/user/subscription`, { stripeUserId : stripeUserId }).then((resp) => resp.data)
 }
 
