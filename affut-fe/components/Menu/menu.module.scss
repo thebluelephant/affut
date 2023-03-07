@@ -3,29 +3,72 @@
 
 /* header */
 .header {
-    background-color: #fff;
-    box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
+    display: flex;
+    color: black;
+    align-items: center;
+    justify-content: space-between;
     position: fixed;
     width: 100%;
     z-index: 3;
-    height: $menu-height-responsive;
+    margin-top: 5px;
+
+    @media screen and (max-width: 900px) {
+        flex-direction: column;
+    }
+
+    .logo {
+        height: 60%;
+        width: 20%;
+        position: absolute;
+
+        .img {
+            width: fit-content !important
+        }
+
+        @media screen and (max-width: 900px) {
+            height: 40px;
+        }
+    }
+
+    &__container {
+        display: flex;
+        width: 95%;
+        background-color: #fff;
+        box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
+        border-radius: 10px;
+        height: $menu-height-responsive;
+        padding: 10px;
+
+        @media screen and (max-width: 900px) {
+            display: flex;
+            flex-direction: column;
+            height: auto;
+            padding: 10px;
+        }
+    }
 
     ul {
         margin: 0;
         padding: 0;
         list-style: none;
         overflow: hidden;
-        background-color: #fff;
+
+        @media screen and (max-width: 900px) {
+            display: flex;
+            flex-direction: column;
+            row-gap: 20px;
+            text-align: center;
+        }
     }
 
     li {
         &:hover {
-            border-bottom: solid 3px $primary;
+            color: $primary;
         }
 
         a {
+            font-family: 'KumbhSans-Bold';
             display: block;
-            border-right: 1px solid #f4f4f4;
             text-decoration: none;
         }
     }
@@ -39,13 +82,15 @@
     /* menu icon */
     .menuIcon {
         cursor: pointer;
-        display: inline-block;
-        float: right;
         position: relative;
         user-select: none;
         height: $menu-height-responsive;
+        display: flex;
+        justify-content: end;
 
         .navicon {
+            position: absolute;
+            right: 0;
 
             &::before,
             &::after {

@@ -1,9 +1,8 @@
 @import './variables/colors.module.scss';
 
 .home {
-    &__buttons {
-        display: flex;
-        gap: 10px;
-        align-items: flex-end;
-    }
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 }

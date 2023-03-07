@@ -2,7 +2,8 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 import Link from 'next/link';
 import React, { FC, useEffect } from 'react';
 import { BurgerMenu } from '../../styles/icons/burgerMenu';
-import styles from './menu.module.scss';
+import s from './menu.module.scss';
+import Image from 'next/image'
 
 type MenuProps = {
 }
@@ -23,19 +24,26 @@ const Menu: FC<MenuProps> = () => {
   }
 
   return (
-    <>
-      <header className={`${styles.header}`}>
-        <input className={`${styles.menuBtn}`} type="checkbox" id={`${styles.menuBtn}`} />
-        <label className={`${styles.menuIcon}`} htmlFor={`${styles.menuBtn}`}><span className="navicon"><BurgerMenu /></span></label>
-        <ul className={`${styles.menu}`}>
-          <li><Link href="/">Accueil</Link></li>
-          <li><Link href="/research">Rechercher</Link></li>
-          <li><Link href="/followup">Suivi</Link></li>
-          <li ><Link onClick={onLogout} href={`/api/auth/${user ? 'logout' : 'login'}`}>{user ? 'Déconnexion' : 'Connexion'}</Link></li>
-        </ul>
-      </header>
-    </>
+    <header className={s.header} >
 
+
+      <div className={s.header__container}>        
+        <div className={s.logo}>
+          <Image src="/images/affut-logo.png" className={s.img} alt="background texture" fill quality={100} />
+        </div>
+        <>       
+          <input className={s.menuBtn} type="checkbox" id={s.menuBtn} />
+          <label className={s.menuIcon} htmlFor={s.menuBtn}><span className="navicon"><BurgerMenu /></span></label>
+          <ul className={s.menu}>
+            <li><Link href="/home">Accueil</Link></li>
+            <li><Link href="/research">Rechercher</Link></li>
+            <li><Link href="/followup">Suivi</Link></li>
+            <li ><Link onClick={onLogout} href={`/api/auth/${user ? 'logout' : 'login'}`}>{user ? 'Déconnexion' : 'Connexion'}</Link></li>
+          </ul>
+        </>
+
+      </div>
+    </header>
   )
 };
 

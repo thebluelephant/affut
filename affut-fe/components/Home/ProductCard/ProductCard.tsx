@@ -1,7 +1,7 @@
 import { FC } from 'react';
-import { Product } from '../../services/typing/product.interface';
-import { Check } from '../../styles/icons/check';
-import Button from '../shared/button/button';
+import { Product } from '../../../services/typing/product.interface';
+import { Check } from '../../../styles/icons/check';
+import Button from '../../shared/button/button';
 import styles from './ProductCard.module.scss';
 
 
