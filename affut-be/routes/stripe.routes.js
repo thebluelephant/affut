@@ -7,8 +7,18 @@ module.exports = app => {
     const YOUR_DOMAIN = process.env.STRIPE_LOCAL_DOMAIN;
     const router = require("express").Router();
     router.patch("/user-metadata", async (req, res) => {
-        const checkoutSession = await stripe.checkout.sessions.retrieve(req.body.stripeSessionId);
-        const patchedUser = await user.patchUserMetadataWithStripeId(req.body.authUserId, checkoutSession.customer)
+        /**
+         * 2 possibilities : 
+         * - If we receive stripeSessionId: We fill Auth0 user metadata with User Stripe ID
+         * - If stripeSessionId = null : it means the user doesnt have a subscription anymore, but his metadata are not 
+         * updated, so we do it by deleting the stripeId from Auth0 user metadata
+         */
+        let checkoutSession
+        if (req.body.stripeSessionId) {
+            checkoutSession = await stripe.checkout.sessions.retrieve(req.body.stripeSessionId);
+        }
+
+        const patchedUser = await user.patchUserMetadataWithStripeId(req.body.authUserId, checkoutSession?.customer ?? null)
         res.end(JSON.stringify(patchedUser.data))
     });
 
@@ -27,7 +37,7 @@ module.exports = app => {
             ],
             client_reference_id: req.body.authUserId,
             mode: 'subscription',
-            success_url: `${YOUR_DOMAIN}/home?session_id={CHECKOUT_SESSION_ID}`,
+            success_url: `${YOUR_DOMAIN}/checkout?session_id={CHECKOUT_SESSION_ID}`,
             cancel_url: `${YOUR_DOMAIN}/home`,
         });
         res.send(session)
@@ -36,12 +46,10 @@ module.exports = app => {
     router.post('/create-portal-session', async (req, res) => {
         // For demonstration purposes, we're using the Checkout session to retrieve the customer ID.
         // Typically this is stored alongside the authenticated user in your database.
-        const { session_id } = req.body;
-        const checkoutSession = await stripe.checkout.sessions.retrieve(session_id);
-        const returnUrl = `${YOUR_DOMAIN}/home`;
+        const returnUrl = `${YOUR_DOMAIN}/checkout`;
 
         const portalSession = await stripe.billingPortal.sessions.create({
-            customer: checkoutSession.customer,
+            customer: req.body.userStripeId,
             return_url: returnUrl,
         });
         res.send(portalSession.url)
