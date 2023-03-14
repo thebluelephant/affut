@@ -86,7 +86,7 @@
         user-select: none;
         height: $menu-height-responsive;
         display: flex;
-        justify-content: end;
+        justify-content: flex-end;
 
         .navicon {
             position: absolute;

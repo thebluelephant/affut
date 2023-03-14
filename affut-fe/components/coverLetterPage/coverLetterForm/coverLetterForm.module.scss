@@ -1,0 +1,79 @@
+@import '../../../styles/variables/colors.module.scss';
+
+.form {
+    row-gap: 30px;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff94;
+    border-radius: 15px;
+    width: 100%;
+    padding: 10px;
+
+    &__fields {
+        .subtitle {
+            font-size: 25px;
+            margin-bottom: 20px;
+        }
+
+        .field {
+            display: flex;
+            margin-bottom: 35px;
+            flex-direction: column;
+            width: 100%;
+            row-gap: 15px;
+
+            &--italic {
+                font-style: italic;
+            }
+
+            @media screen and (max-width: 900px) {
+                width: 100%;
+            }
+
+            div {
+                display: flex;
+                justify-content: space-between;
+
+                label {
+                    width: 50%;
+                }
+
+                input {
+                    width: 100%;
+
+                }
+            }
+        }
+
+        input {
+            height: 25px;
+        }
+
+        .chipInput {
+            border: transparent;
+            background-color: transparent;
+            border-bottom: 1px solid #6B3FE9;
+            cursor: pointer;
+            width: unset;
+        }
+
+        .chip {
+            background-color: #cabfea;
+            color: #6B3FE9;
+        }
+    }
+
+    &__buttons {
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+        width: 100%;
+
+        .disabledFields {
+            font-style: italic;
+            margin-right: 10px;
+        }
+    }
+
+
+}

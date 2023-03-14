@@ -15,4 +15,12 @@
         border: solid 2px $primary;
         color: $primary;
     }
+
+    &__disabled {
+        background-color: transparent;
+        border: solid 2px lightgray;
+        color: lightgray;
+        cursor: default;
+        pointer-events: none;
+    }
 }

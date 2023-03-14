@@ -8,7 +8,6 @@ import { Edit } from "../styles/icons/edit";
 import { Delete } from "../styles/icons/delete";
 import { Check } from "../styles/icons/check";
 import { Cross } from "../styles/icons/cross";
-import DeleteFollowupPopin from "../components/followupPage/deleteFollowupPopin/deleteFollowupPopin";
 import FollowupTableRow from "../components/followupPage/followupTableRow/followupTableRow";
 import Button from "../components/shared/button/button";
 import BinaryPopin from "../components/shared/binaryPopin/binaryPopin";
