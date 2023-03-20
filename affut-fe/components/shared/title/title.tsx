@@ -8,13 +8,13 @@ type TitleProps = {
 
 const Title: FC<TitleProps> = ({ title, type = 'primary' }): ReactElement => {
 
-    return (
-        <div className={`${styles.title}`}>
-            <span className={`${styles.underline}`} />
-            <p className={`${styles.text} ${type === "primary" ? styles.text__primary : ''}`}>{title}</p>
+  return (
+    <div className={`${styles.title}`}>
+      <span className={`${styles.underline}`} />
+      <p className={`${styles.text} ${type === "primary" ? styles.text__primary : ''}`}>{title}</p>
 
-        </div>
-    )
+    </div>
+  )
 };
 
 export default Title;

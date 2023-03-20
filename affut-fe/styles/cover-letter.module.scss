@@ -1,0 +1,79 @@
+@import './variables/colors.module.scss';
+
+.container {
+    display: flex;
+    height: 100%;
+    column-gap: 25px;
+
+    .subtitle {
+        font-size: 25px;
+        margin-bottom: 20px;
+    }
+
+    @media screen and (max-width: 900px) {
+        flex-direction: column;
+        align-items: center;
+        row-gap: 15px;
+    }
+
+    &__settings {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        row-gap: 15px;
+
+        @media screen and (max-width: 900px) {
+            width: 100%;
+            row-gap: 40px;
+        }
+    }
+
+    &__letter {
+        min-height: 100%;
+        width: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        @media screen and (max-width: 900px) {
+            width: 100%;
+
+            .text {
+                &--disabled {
+                    display: none;
+                }
+            }
+        }
+
+        .loader {
+            position: absolute;
+
+            @media screen and (max-width: 900px) {
+                height: 100%;
+                width: 100%;
+                background-color: #ffffffb3;
+                position: fixed;
+                top: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+            }
+        }
+
+        input,
+        textarea {
+            height: 100%;
+            width: 100%;
+            background-color: #ffffff94;
+            border-radius: 15px;
+            border: 0;
+            padding: 10px;
+        }
+
+
+    }
+
+
+}
