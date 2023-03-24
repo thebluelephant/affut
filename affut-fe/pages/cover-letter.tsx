@@ -8,14 +8,20 @@ import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { CoverLetterForm } from "../components/coverLetterPage/coverLetterForm/coverLetterForm";
 import { CoverLetterExport } from "../components/coverLetterPage/coverLetterExport/CoverLetterExport";
 import { CoverLetterExplanations } from "../components/coverLetterPage/coverLetterExplanations/CoverLetterExplanations";
+import { AppContext } from "../services/context/state";
+import { useSubscriptionAccess } from "../services/hooks/subscriptionAccess";
 
-const CoverLetter: NextPage = ({ }) => {
+interface CoverLetterProps {
+  appContext : AppContext
+}
+
+const CoverLetter: NextPage<CoverLetterProps> = ({ appContext }) => {
   const [letter, setLetter] = useState<string>()
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [count, setCount] = useState<number>()
   const userId = typeof window !== 'undefined' ? localStorage.getItem('userId') : null;
   const letterCountOver3 = !!(count && count >= 3)
-
+ 
   useEffect(() => {
     if (userId && !count)
       getCoverLetterCount(userId).then((response) => setCount(response.data.count))

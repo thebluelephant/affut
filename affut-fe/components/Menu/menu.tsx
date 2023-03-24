@@ -1,20 +1,14 @@
 import { useUser } from '@auth0/nextjs-auth0/client';
 import Link from 'next/link';
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { BurgerMenu } from '../../styles/icons/burgerMenu';
 import s from './menu.module.scss';
 import Image from 'next/image'
+import { AppContext } from '../../services/context/state';
 
 const Menu: FC = () => {
-  const { user } = useUser();
-  // For clarity, we save a formatted version of Auth0 user ID in the local storage.
-  // We had to use useMemo because useEffect doesn't work. We need to have a function called from userProvider to have access to the user data.
-  useEffect(() => {
-    if (user?.sub) {
-      localStorage.setItem('userId', user.sub.substring(6));
-    }
-  }, [user?.sub]);
-
+  const { user } = useUser()
+  
   const onLogout = () => {
     // Seems we can't custom enough auth0 + nextJs to remove the localStorage on logout, middleware doesn't seems to work too, so here it is.
     localStorage.removeItem('userId')

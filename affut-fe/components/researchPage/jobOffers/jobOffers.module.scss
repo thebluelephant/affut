@@ -1,0 +1,59 @@
+@import '../../../styles/variables/colors.module.scss';
+
+.offers {
+    display: flex;
+    justify-content: space-around;
+    height: calc(100vh - 15vh);
+    width: 100%;
+    margin-top: 2vh;
+
+
+    @media screen and (max-width: 900px) {
+        height: calc(100vh - 35vh);
+    }
+
+    &__jobs {
+        width: 48vw;
+        overflow: auto;
+
+        @media screen and (max-width: 900px) {
+            width: 100vw;
+        }
+
+        .job {
+            height: 50px;
+            width: 100%;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: $white-transparent;
+            border-radius: 10px;
+            cursor: pointer;
+
+            &--selected,
+            &:hover {
+                background-color: white;
+            }
+
+            &__name {
+                margin-right: 15px;
+            }
+
+            &__place {
+                text-transform: lowercase;
+
+                &:before {
+                    content: "(";
+                }
+
+                &:after {
+                    content: ")";
+                }
+
+            }
+        }
+    }
+
+
+}

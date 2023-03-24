@@ -23,8 +23,8 @@ Followup.create = (newFollowup, result) => {
     });
 };
 
-Followup.findAllByUserId = (userId, result) => {
-    sql.query(`SELECT * FROM followup WHERE userId = ?`, userId, (err, res) => {
+Followup.findAllByUserId = (userId, canAccessUnlimitedFollowups, result) => {
+    sql.query(`SELECT * FROM followup WHERE userId = ? ${canAccessUnlimitedFollowups === true ? '' : 'LIMIT 5'}`, userId, (err, res) => {
         if (err) {
             result(err, null);
             return;

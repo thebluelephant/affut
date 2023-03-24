@@ -11,28 +11,33 @@ import { Cross } from "../styles/icons/cross";
 import FollowupTableRow from "../components/followupPage/followupTableRow/followupTableRow";
 import Button from "../components/shared/button/button";
 import BinaryPopin from "../components/shared/binaryPopin/binaryPopin";
+import { useSubscriptionAccess } from "../services/hooks/subscriptionAccess";
+import { followUp } from "../services/variable/subscription";
 
 interface FollowupProps {
 }
 
 const Followup: NextPage<FollowupProps> = ({ }) => {
+  const {canAccess} = useSubscriptionAccess()
+  const [canAccessUnlimitedFollowups, setCanAccessUnlimitedFollowups] = useState<boolean>(false)
   const [followUps, setFollowUps] = useState<Followup[]>();
   const [followUpInEdition, setFollowUpInEdition] = useState<Followup | null>(null);
   const [followupIdToDelete, setFollowUpIdToDelete] = useState<string | null>(null);
+
   const deletePopinRef = useRef<{ openPopin: () => void } | null>(null);
   const userId = typeof window !== 'undefined' ? localStorage.getItem('userId') : null;
 
 
 
   useEffect(() => {
+    setCanAccessUnlimitedFollowups(canAccess(followUp))
     getUserFollowups();
   }, []);
 
   // Get follow ups 
   const getUserFollowups = () => {
     if (userId) {
-      getUserFollowUps(userId).then((resp) => setFollowUps(resp));
-
+      getUserFollowUps(userId, canAccessUnlimitedFollowups).then((resp) => setFollowUps(resp));
     }
   }
 
@@ -58,7 +63,7 @@ const Followup: NextPage<FollowupProps> = ({ }) => {
 
   const saveNewFollowup = () => {
     if (followUpInEdition) {
-      createFollowup(followUpInEdition).then((resp) => {
+      createFollowup(followUpInEdition, canAccessUnlimitedFollowups).then((resp) => {
         if (resp === 200) {
           setFollowUpInEdition(null);
           getUserFollowups();
@@ -118,7 +123,7 @@ const Followup: NextPage<FollowupProps> = ({ }) => {
 
     <BinaryPopin ref={deletePopinRef} onConfirm={() => deleteAFollowup()} text="Voulez-vous vraiment supprimer ce suivi ?" />
     <div className={styles['followupPage__header']}>
-      <Button title={"Créer"} type={"primary"} onButtonClick={createNewLine} />
+      <Button title={"Créer"} type={canAccessUnlimitedFollowups ? 'primary' : 'disabled'} onButtonClick={createNewLine} />
     </div>
 
     <div className={styles['followupPage__table']}>
