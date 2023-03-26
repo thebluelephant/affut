@@ -1,5 +1,5 @@
 export interface Product {
-    id: string | null | undefined,
+    priceId: string | null | undefined,
     title: string,
     price: string |  null,
     advantages: string[],

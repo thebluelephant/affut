@@ -7,7 +7,7 @@ import styles from './ProductCard.module.scss';
 
 type ProductCardProps = {
     product: Product
-    onSubscription : (productId : string) => void
+    onSubscription : (priceId : string) => void
 }
 
 const ProductCard: FC<ProductCardProps> = ({ product, onSubscription }) => {
@@ -25,7 +25,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, onSubscription }) => {
           </div>)}
       </ul>
       <div className={styles['productCard__button']}>
-        <Button title={'Souscrire'} type={'primary'} onButtonClick={() => onSubscription(product.id)} />
+        <Button title={'Souscrire'} type={'primary'} onButtonClick={() => onSubscription(product.priceId)} />
       </div>
       
      

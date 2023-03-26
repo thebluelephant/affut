@@ -5,8 +5,14 @@ const baseApi = process.env.NEXT_PUBLIC_APP_API
 /**
  * @returns List of follwups for a certain user
  */
-export const getUserFollowUps: (userId: string, canAccessUnlimitedFollowups : boolean) => Promise<Followup[]> = (userId, canAccessUnlimitedFollowups) => {
-  return axios.get(`${baseApi}/followup/getByUserId/${userId}/?canAccessUnlimitedFollowups=${canAccessUnlimitedFollowups}`).then((response) => {
+export const getUserFollowUps: (userId: string, stripeId? : string) => Promise<Followup[]> = (userId, stripeId) => {
+  let url = `${baseApi}/followup/getByUserId/${userId}/`
+
+  if (stripeId){
+    url += `?&stripeid=${stripeId}`
+  }
+
+  return axios.get(url).then((response) => {
     return response.data
   })
 }
@@ -31,8 +37,12 @@ export const deleteFollowup: (followupId: string) => Promise<Followup> = (follow
 /**
  * Create a follow up 
  */
-export const createFollowup: (followup: Followup, canAccessUnlimitedFollowups : boolean) => Promise<{success : boolean, data : any}> = (followup, canAccessUnlimitedFollowups) => {
-  return axios.post(`${baseApi}/followup/new`, {followup, canAccessUnlimitedFollowups}).then((response) =>  response)
+export const createFollowup = (followup: Followup, stripeId? : string) => {
+  try {
+    return axios.post(`${baseApi}/followup/new`, {followup, stripeId}).then((response) =>  response.data)
+  } catch (error) {
+    console.log(error);
+  }  
 }
 
 export const hasUserAlreadyCandidates: (userId: string, company: string, jobName: string) => Promise<boolean> = (userId, company, jobName) => {

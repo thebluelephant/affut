@@ -1,4 +1,6 @@
 const Followup = require("../models/followup.model.js");
+const { getUserSubscription } = require("./user.controller");
+
 
 /**
  * Create a follow up 
@@ -11,19 +13,23 @@ exports.create = async (req, res) => {
             message: "Content can not be empty!"
         });
     }
-    const { followup, canAccessUnlimitedFollowups } = req.body
+    const { followup, stripeId } = req.body
+    const subscription = await getUserSubscription(stripeId)
 
-    const userNumberOfFollowUps = await new Promise((resolve) => Followup.findAllByUserId(followup.userId, false, (err, data) => {
-        if (err)
-            res.status(500).resolve({
-                message:
-                    err.message || "Some error occurred while retrieving followups."
-            });
-        else resolve(data);
-    })).then((res) => res.length)
+    if (!subscription) {
+        // Check number of existing followup of the user
+        const userNumberOfFollowUps = await new Promise((resolve) => Followup.findAllByUserId(followup.userId, false, (err, data) => {
+            if (err)
+                res.status(500).resolve({
+                    message:
+                        err.message || "Some error occurred while retrieving followups."
+                });
+            else resolve(data);
+        })).then((res) => res.length)
 
-    if (canAccessUnlimitedFollowups === false && userNumberOfFollowUps >= 5) {
-        res.send({ success: false, data: "You reached your follow ups limit, upgadre your plan to access unlimited access" })
+        if (userNumberOfFollowUps >= 5) {
+            res.send({ success: false, data: "You reached your follow ups limit, upgadre your plan to access unlimited access" })
+        }
     }
 
     // Create a Followup
@@ -39,7 +45,7 @@ exports.create = async (req, res) => {
     // Save followup in the database
     Followup.create(newFollowup, (err, data) => {
         if (err) res.send({ success: false, data: err.message })
-        else res.send({ success: false, data });
+        else res.send({ success: true, data });
     });
 };
 
@@ -49,7 +55,9 @@ exports.create = async (req, res) => {
  */
 exports.findAllByUserId = (req, res) => {
     const userId = req?.params?.userId;
-    const canAccessUnlimitedFollowups = req?.query?.canAccessUnlimitedFollowups
+    const stripeId = req?.query?.stripeid
+    const canAccessUnlimitedFollowups = !!stripeId ?? false
+
     Followup.findAllByUserId(userId, canAccessUnlimitedFollowups, (err, data) => {
         if (err)
             res.status(500).send({

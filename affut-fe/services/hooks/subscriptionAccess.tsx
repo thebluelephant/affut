@@ -5,14 +5,13 @@ import { coverLetter, followUp, premiumSubscription, research, starterSubscripti
 export const useSubscriptionAccess = () => {
   const appContext = useContext(AppContext);
 
-  const featureSubscription : Map<string, string> = new Map( [
-    [coverLetter, premiumSubscription],
-    [followUp, starterSubscription],
-    [research, starterSubscription],
+  const featureSubscription : Map<string, string[]> = new Map( [
+    [, [premiumSubscription]],
+    [followUp, [starterSubscription, premiumSubscription]],
+    [research, [starterSubscription, premiumSubscription]],
   ])
-
-  const canAccess = (featureName : string) => appContext.subscription?.includes(featureSubscription.get(featureName))
-
+  
+  const canAccess = (featureName : string) => featureSubscription.get(featureName)?.includes(appContext.subscription)
   return {
     canAccess
   }

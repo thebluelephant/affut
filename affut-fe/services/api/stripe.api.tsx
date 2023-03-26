@@ -19,7 +19,7 @@ export const updateUserMetadata = (stripeSessionId : string | null, authUserId :
 }
 
 // Get list of user's products name owned
-export const getUserSubscriptions = (stripeUserId : string) : Promise<string[]>  => {
+export const getUserSubscriptions = (stripeUserId : string) : Promise<string>  => {
   return axios.post(`${process.env.NEXT_PUBLIC_LOCAL_API}/user/subscription`, { stripeUserId : stripeUserId }).then((resp) => resp.data)
 }
 

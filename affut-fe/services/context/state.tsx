@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react';
 
 export interface AppContext {
-    subscription : string,
+    subscription : string | undefined,
     userId : string
 }
-export const AppContext = createContext({subscription : [], userId : ''});
+export const AppContext = createContext({subscription : '', userId : ''});

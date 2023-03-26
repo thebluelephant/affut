@@ -6,7 +6,10 @@ const formatter = require('../utils/formatter.utils');
  */
 exports.formatRapidJobToJob = (rapidJobs) => {
     return rapidJobs.map(job => {
-        return {
+        // If the job comes from Pole Emploi, we don't need to display it because we already use the Pole Emploi job API 
+        if (job.origineOffre.origine === 'Pôle Emploi') {
+            return
+        } else return {
             id: job.job_id,
             intitule: formatter.capitalize(job.job_title),
             description: job.job_description,
@@ -44,7 +47,6 @@ exports.formatRapidJobToJob = (rapidJobs) => {
  * @returns A list of jobs formatted
  */
 exports.formatPoleEmploiToJob = (poleEmploiJobs) => {
-
     return poleEmploiJobs?.map(job => {
         return {
             ...job,

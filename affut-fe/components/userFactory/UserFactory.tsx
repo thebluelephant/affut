@@ -4,7 +4,7 @@ import { getUserSubscriptions } from '../../services/api/stripe.api';
 import { AppContext } from '../../services/context/state';
 
 const UserFactory = ({children}) => {
-  const [userSubscription, setUserSubscription] = useState([])
+  const [userSubscription, setUserSubscription] = useState<string>()
   const { user } = useUser()
 
   // For clarity, we save a formatted version of Auth0 user ID in the local storage.

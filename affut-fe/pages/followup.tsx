@@ -2,7 +2,7 @@
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { useEffect, useRef, useState } from "react";
 import { createFollowup, deleteFollowup, getUserFollowUps, updateFollowup } from "../services/api/followup.api";
-import styles from '../styles/followupPage.module.scss'
+import s from '../styles/followupPage.module.scss'
 import { Followup } from "../services/typing/followup.interface";
 import { Edit } from "../styles/icons/edit";
 import { Delete } from "../styles/icons/delete";
@@ -13,31 +13,31 @@ import Button from "../components/shared/button/button";
 import BinaryPopin from "../components/shared/binaryPopin/binaryPopin";
 import { useSubscriptionAccess } from "../services/hooks/subscriptionAccess";
 import { followUp } from "../services/variable/subscription";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 interface FollowupProps {
 }
 
 const Followup: NextPage<FollowupProps> = ({ }) => {
   const {canAccess} = useSubscriptionAccess()
-  const [canAccessUnlimitedFollowups, setCanAccessUnlimitedFollowups] = useState<boolean>(false)
-  const [followUps, setFollowUps] = useState<Followup[]>();
+  const {user} = useUser()
+  const [followUps, setFollowUps] = useState<Followup[]>([]);
   const [followUpInEdition, setFollowUpInEdition] = useState<Followup | null>(null);
   const [followupIdToDelete, setFollowUpIdToDelete] = useState<string | null>(null);
 
   const deletePopinRef = useRef<{ openPopin: () => void } | null>(null);
   const userId = typeof window !== 'undefined' ? localStorage.getItem('userId') : null;
-
+  const canCreateFollowup = canAccess(followUp) || canAccess(followUp) === false && followUps.length < 5 
 
 
   useEffect(() => {
-    setCanAccessUnlimitedFollowups(canAccess(followUp))
     getUserFollowups();
   }, []);
 
   // Get follow ups 
   const getUserFollowups = () => {
-    if (userId) {
-      getUserFollowUps(userId, canAccessUnlimitedFollowups).then((resp) => setFollowUps(resp));
+    if (user && userId) {
+      getUserFollowUps(userId, user.stripeId).then((resp) => setFollowUps(resp));
     }
   }
 
@@ -63,8 +63,8 @@ const Followup: NextPage<FollowupProps> = ({ }) => {
 
   const saveNewFollowup = () => {
     if (followUpInEdition) {
-      createFollowup(followUpInEdition, canAccessUnlimitedFollowups).then((resp) => {
-        if (resp === 200) {
+      createFollowup(followUpInEdition, user.stripeId).then((resp) => {
+        if (resp.success) {
           setFollowUpInEdition(null);
           getUserFollowups();
         }
@@ -118,26 +118,28 @@ const Followup: NextPage<FollowupProps> = ({ }) => {
       })
     }
   }
-
-  return <div className={styles.followupPage}>
+  return <div className={s.followupPage}>
 
     <BinaryPopin ref={deletePopinRef} onConfirm={() => deleteAFollowup()} text="Voulez-vous vraiment supprimer ce suivi ?" />
-    <div className={styles['followupPage__header']}>
-      <Button title={"Créer"} type={canAccessUnlimitedFollowups ? 'primary' : 'disabled'} onButtonClick={createNewLine} />
+    <div className={s['followupPage__header']}>
+      <Button title={"Créer"} type={canCreateFollowup ? 'primary' : 'disabled'} onButtonClick={createNewLine} />
     </div>
 
-    <div className={styles['followupPage__table']}>
-      <div className={styles['row__header']}>
+    <div className={s['followupPage__table']}>
+      <div className={s['row__header']}>
         {
-          followUps && Object.keys(followUps[0]).map((headerTitle) => {
+          followUps?.length ? Object.keys(followUps[0]).map((headerTitle) => {
             if (headerTitle === "userId" || headerTitle === "id") {
               return
             } else {
               return <span key={headerTitle}>{headerTitle}</span>
             }
-          })
+          }) : null
         }
       </div>
+      {
+        !followUps.length && <p className={s.noFollowups}>Vous n'avez pas encore de suivi</p>
+      }
 
       {
         followUps?.map((followUp) => {
@@ -145,8 +147,8 @@ const Followup: NextPage<FollowupProps> = ({ }) => {
           const currentLineIsInCreation = followUpInEdition && !followUp.id && !followUpInEdition.id;
           return (
             <>
-              <div className={styles.row} key={followUp.id}>
-                <div className={styles['row__data']}>
+              <div className={s.row} key={followUp.id}>
+                <div className={s['row__data']}>
                   <FollowupTableRow followup={followUp} followUpInEdition={followUpInEdition} setFollowUpInEdition={(colName, newValue) => setFollowUpInEdition({
                     ...followUpInEdition,
                     ...{ [colName]: newValue }
@@ -154,40 +156,37 @@ const Followup: NextPage<FollowupProps> = ({ }) => {
                 </div>
 
                 {
-                  <div className={styles['row__actions']}>
+                  <div className={s['row__actions']}>
                     {
                       currentLineIsInEdition || currentLineIsInCreation ?
                           <>
-                            <div className={`${styles.actionButton} ${styles['actionButton--green']}`} onClick={() => currentLineIsInCreation ? saveNewFollowup() : saveEditedFollowup()}>
-                              <span className={styles.icon}>
+                            <div className={`${s.actionButton} ${s['actionButton--green']}`} onClick={() => currentLineIsInCreation ? saveNewFollowup() : saveEditedFollowup()}>
+                              <span className={s.icon}>
                                 <Check color="green" />
                               </span>
                             </div>
-                            <div className={`${styles.actionButton} ${styles['actionButton--red']}`}>
-                              <span className={styles.icon} onClick={() => currentLineIsInCreation ? deleteNewLine() : setFollowUpInEdition(null)}>
+                            <div className={`${s.actionButton} ${s['actionButton--red']}`}>
+                              <span className={s.icon} onClick={() => currentLineIsInCreation ? deleteNewLine() : setFollowUpInEdition(null)}>
                                 <Cross color="red" />
                               </span>
                             </div>
                           </>
                         :
-                          <div className={styles.actionButton} onClick={() => onEditButtonClick(followUp)}>
-                            <span className={styles.icon}>
+                          <div className={s.actionButton} onClick={() => onEditButtonClick(followUp)}>
+                            <span className={s.icon}>
                               <Edit />
                             </span>
                           </div>
                     }
                     {
-                      !currentLineIsInCreation && <div className={styles.actionButton} onClick={() => onDeleteButtonClick(followUp.id)}>
-                        <span className={styles.icon}>
+                      !currentLineIsInCreation && <div className={s.actionButton} onClick={() => onDeleteButtonClick(followUp.id)}>
+                        <span className={s.icon}>
                           <Delete />
                         </span>
                       </div>
                     }
-
-
                   </div>
                 }
-
               </div>
             </>
           )

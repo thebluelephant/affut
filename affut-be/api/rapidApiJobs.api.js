@@ -12,7 +12,6 @@ exports.searchJobOffersFromRapidApi = (jobKeyWord, locality) => {
         }
     })
         .then((res) => {
-            const jobs = jobUtils.formatRapidJobToJob(res.data.data);
-            return jobs
+            return jobUtils.formatRapidJobToJob(res.data.data);
         })
 }

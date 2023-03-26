@@ -13,19 +13,8 @@ type JobDetailsProps = {
 const JobDetails: FC<JobDetailsProps> = ({ job, onUserCandidates }) => {
   const { windowWidth } = useWindowDimensions();
   const [popInOpen, setPopInOpen] = useState<boolean>(false);
-  const [jobDetails, setJobDetails] = useState<Job | null>(null)
 
-  useEffect(() => {
-    if (job) {
-      setJobDetails(job)
-    }
-    if (windowWidth && windowWidth < 900){
-      setPopInOpen(!!jobDetails)
-    }
-    
-  }, [job, jobDetails, windowWidth]);
-
-  const desktopDetail = <>
+  const details = <div className={styles.jobDetails}>
     <div className={styles.header}>
       <p className={styles.header__intitule}>{job.intitule}</p>
       <p className={styles.header__place}> {job.entreprise.nom} {job.lieuTravail.libelle} </p>
@@ -44,14 +33,18 @@ const JobDetails: FC<JobDetailsProps> = ({ job, onUserCandidates }) => {
       <a className={styles.originalOffer} rel="noreferrer" href={job.origineOffre.urlOrigine} target="_blank">Voir l'offre originale</a>
       <Button title={"Candidater sur Pole emploi et ajouter à mes suivis"} type={"primary"} onButtonClick={() => onUserCandidates(job)} />
     </div>
-  </>
+  </div>
 
-  const mobileDetail = <Popin shouldOpen={popInOpen} onPopinCrossClicked={() => {setPopInOpen(false), setJobDetails(null)}}><JobDetails job={job} onUserCandidates={onUserCandidates} /></Popin>
+  const mobileDetail = <Popin shouldOpen={popInOpen} onPopinCrossClicked={() => {setPopInOpen(false)}}>{details}</Popin>
 
+  useEffect(() => {
+    setPopInOpen(!!job)
+  }, [job]);
+  
   return (
-    <div className={styles.jobDetails}>
-      { windowWidth && windowWidth > 900 ? desktopDetail : mobileDetail}
-    </div>
+    <>
+      { windowWidth && windowWidth > 900 ? details : mobileDetail}
+    </>
   )
 };
 

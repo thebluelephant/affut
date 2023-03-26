@@ -4,7 +4,6 @@ import React, { FC } from 'react';
 import { BurgerMenu } from '../../styles/icons/burgerMenu';
 import s from './menu.module.scss';
 import Image from 'next/image'
-import { AppContext } from '../../services/context/state';
 
 const Menu: FC = () => {
   const { user } = useUser()

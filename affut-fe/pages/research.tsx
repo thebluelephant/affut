@@ -8,41 +8,39 @@ import Popin from "../components/shared/popin/popin";
 import styles from '../styles/researchPage.module.scss'
 import { Job } from "../services/typing/job.interface";
 import { createFollowup, hasUserAlreadyCandidates } from "../services/api/followup.api";
-import Followup from "./followup";
 import BinaryPopin from "../components/shared/binaryPopin/binaryPopin";
-import { useSubscriptionAccess } from "../services/hooks/subscriptionAccess";
-import { research } from "../services/variable/subscription";
 import JobOffers from "../components/researchPage/jobOffers/jobOffers";
-
+import { Followup } from "../services/typing/followup.interface";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import Loader from "../components/shared/loader/loader";
 
 const Research: NextPage = () => {
-  const {canAccess} = useSubscriptionAccess()
-  const [canAccessUnlimitedFollowups, setCanAccessUnlimitedFollowups] = useState<boolean>(false)
-  const [jobOffers, setJobOffers] = useState<Job[]>();
-
+  const { user } = useUser()
+  const [jobOffers, setJobOffers] = useState<Job[] | null>(null);
   const [popInOpen, setPopInOpen] = useState<boolean>(false);
+  const [researchInProgress, setResearchInProgress] = useState<boolean>(false);
   const [errorPopin, setErrorPopin] = useState<{open : boolean, message : string | null}>({open : false, message : null});
   const [pendingFollowup, setPendingFollowup] = useState<Followup>();
   const alreadyCandidatesPopin = useRef<{ openPopin: () => void } | null>(null);
   const userId = typeof window !== 'undefined' ? localStorage.getItem('userId') : null;
-
-  useEffect(() => {
-    setCanAccessUnlimitedFollowups(canAccess(research))
-  }, []);
-
-
-  const onJobResearch = (jobKeyWord: string, locality: number) => {
-    const verifiedLocality = locality > 0 ? locality : undefined
-    searchJobOffers(jobKeyWord, verifiedLocality)
-      .then((offers) => {
-        console.log('hello');
-        setJobOffers(offers)
-      })
-  }
   
+  useEffect(() => {
+    if (pendingFollowup) {
+      onUserCandidates()
+    }
+  }, [pendingFollowup]);
 
-  const onUserCandidates = async (job: Job) => {
-    if (userId) {
+  const onJobResearch = (jobKeyWord: string, locality: { city: string; code: number; }) => {
+    setResearchInProgress(true)
+    const verifiedLocality = locality.code > 0 ? locality : undefined
+    searchJobOffers(jobKeyWord, verifiedLocality, user?.stripeId).then((offers) => {
+      setJobOffers(offers)
+      setResearchInProgress(false)
+    })
+  }
+
+  const createPendingFollowup = (job : Job) => {
+    if (userId) {  
       setPendingFollowup({
         company: job.entreprise.nom ?? "inconnu",
         applicationDate: new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' }),
@@ -51,24 +49,26 @@ const Research: NextPage = () => {
         status: "sent",
         userId: userId
       })
-    
-      hasUserAlreadyCandidates(userId, job.entreprise.nom, job.intitule).then((hasUserAlreadyCandidates) => {
+    } 
+  }
+
+  const onUserCandidates = () => {
+    if (userId && pendingFollowup)
+      hasUserAlreadyCandidates(userId, pendingFollowup.company, pendingFollowup.jobName).then((hasUserAlreadyCandidates) => {
         if (hasUserAlreadyCandidates) {
           alreadyCandidatesPopin.current?.openPopin();
         } else {
           createAFollowup()
         }
       })
-    }
   }
 
   const createAFollowup = () => {
     if (pendingFollowup) {
-      createFollowup(pendingFollowup, canAccessUnlimitedFollowups).then((resp) => {
+      createFollowup(pendingFollowup, user.stripeId).then((resp) => {
         if (!resp.success) {
           setErrorPopin({open : true, message : resp.data})
         }
-
         if (pendingFollowup.announceUrl) {
           window?.open(pendingFollowup.announceUrl, '_blank')?.focus();
 
@@ -80,15 +80,13 @@ const Research: NextPage = () => {
     }
   }
 
-
-
   return <div className={styles.researchPage}>
     <JobReseachContainer onResearch={onJobResearch} />
     <BinaryPopin ref={alreadyCandidatesPopin} onConfirm={() => createAFollowup()} text={"Il semble que vous ayez deja postulé à cette offre, souhaitez-vous poursuivre et ajouter un nouveau suivi ?"} />
     <Popin shouldOpen={errorPopin.open} onPopinCrossClicked={() => setErrorPopin({open : false, message : null})}>
       <p>{errorPopin.message}</p>
     </Popin>
-    <JobOffers jobOffers={jobOffers} onUserCandidates={onUserCandidates} />
+    {researchInProgress ? <Loader/> : <JobOffers jobOffers={jobOffers} onUserCandidates={createPendingFollowup} /> }
   </div>;
 };
 

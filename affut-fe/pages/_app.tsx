@@ -19,9 +19,7 @@ export default function App({ Component, pageProps }: AppProps) {
               }
             </AppContext.Consumer>
           </div>
-          <Image className='background-texture' src="/background-texture.png" alt="background texture" fill
-            objectFit='cover'
-            quality={100} />
+
         </div>
       </UserFactory>
     </UserProvider>)

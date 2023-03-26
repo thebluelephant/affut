@@ -1,5 +1,7 @@
 const CoverLetter = require("../models/coverLetter.model");
 const chat = require("../models/chatgpt.model");
+const { getUserSubscription } = require("./user.controller");
+const subscriptionPlans = require('../utils/subscription.utils');
 const dayjs = require('dayjs')
 
 exports.initialize = async (req, res) => {
@@ -28,22 +30,31 @@ exports.getByUserId = async (req, res) => {
 
 exports.generateLetter = async (req, res) => {
     const userId = req?.params?.userId
+    const stripeId = req?.params?.stripeId
     const { form } = req.body
+    const subscription = await getUserSubscription(stripeId)
 
-    assertUserCanGenerateLetter(userId).then((response) => {
-        if (response.success) {
-            return chat.askSomething(form).then((letter) => {
-                const data = {
-                    ...letter,
-                    count: response.data
-                }
-                res.send(data)
-            })
+    // User can only generate letter if he's subscribed to premium plan
+    if (subscription === subscriptionPlans.premiumSubscription) {
+        assertUserCanGenerateLetter(userId).then((response) => {
+            if (response.success) {
+                return chat.askSomething(form).then((letter) => {
+                    const data = {
+                        ...letter,
+                        count: response.data
+                    }
+                    res.send(data)
+                })
 
-        } else {
-            return res.send(response)
-        }
-    })
+            } else {
+                return res.send(response)
+            }
+        })
+    } else {
+        res.send(({ success: false, data: "You must upgrade your plan to have access to this feature" }))
+    }
+
+
 }
 
 assertUserCanGenerateLetter = async (userId) => {

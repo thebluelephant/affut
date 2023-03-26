@@ -10,32 +10,31 @@ const Subscriptions: FC = () => {
   const router = useRouter();
   const subscriptions = [
     {
-      id: null,
+      priceId: null,
       title: 'Gratuit',
       price: '0€',
       advantages: [
-        'Recherche des offres sur 1 site à la fois',
-        'Quantité de suivis limité à 5'
+        "Résultats des recherches d'offres d'emploi limité a 25",
+        'Maximum 5 suivis'
       ],
     },
     {
-      id: 'price_1MdHtZAyRmXxyyquxVwrIbp0',
+      priceId: 'price_1MdHtZAyRmXxyyquxVwrIbp0',
       title: 'Starter',
       price: '6.90€',
       advantages: [
-        'Recherche des offres sur tous les sites',
+        "Résultats des recherches d'offres d'emploi limité a 50",
         'Quantité de suivis illimités'
       ],
     },
     {
-      id: 'price_1MdHtzAyRmXxyyquTmTeHldz',
+      priceId: 'price_1MdHtzAyRmXxyyquTmTeHldz',
       title: 'Premium',
       price: '9.90€',
       advantages: [
-        'Recherche des offres sur tous les sites',
+        "Résultats des recherches d'offres d'emploi illimité",
         'Quantité de suivis illimités',
-        'Accès au parcours candidatures spontanées',
-        'Accès à l’évaluation des entreprises'
+        'Accès au générateur de lettre de motivation',
       ],
     }
   ]
@@ -43,9 +42,7 @@ const Subscriptions: FC = () => {
   const onUserSubscribes = (productId: string) => {
     if (userId) {
       const userSubscription = {
-        line_items: [
-          { price: productId, quantity: 1 },
-        ],
+        line_items: { price: productId },
         mode: 'subscription',
         client_reference_id: userId
       }
@@ -63,7 +60,7 @@ const Subscriptions: FC = () => {
   return (
     <div className={s.subscriptions}>
       {subscriptions?.map((product: Product) => 
-        <ProductCard key={product.id} product={product} onSubscription={(productId) => onUserSubscribes(productId)} />
+        <ProductCard key={product.priceId} product={product} onSubscription={(priceId) => onUserSubscribes(priceId)} />
       )}
      
     </div>
