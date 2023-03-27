@@ -3,21 +3,27 @@ import '../styles/globals.scss'
 import Image from 'next/image'
 import type { AppProps } from 'next/app'
 import Menu from '../components/Menu/menu'
+import Subscription from '../components/Hello/Subscription.tsx/subscription';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 export default function App({ Component, pageProps }: AppProps) {
+  const [openSubscriptionPopin, setOpenSubscriptionPopin] = useState<boolean>(false)
+  const { push } = useRouter();
+
+  useEffect(() => {
+    push('/hello');
+  }, []);
 
   return <UserProvider>
     <>
       <div className='app'>
-        <Menu />
+        <Menu onSubscriptionClick={() => setOpenSubscriptionPopin(true)}/>
         <div className='appBody'>
-          <Component {...pageProps} />
+          <Component {...pageProps}/>
         </div>
-        <Image className='background-texture' src="/background-texture.png" alt="background texture" fill
-          objectFit='cover'
-          quality={100} />
-
       </div>
+      <Subscription onClose={() => setOpenSubscriptionPopin(false)} isOpen={openSubscriptionPopin}/>
     </>
   </UserProvider>
 }

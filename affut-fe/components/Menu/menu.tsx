@@ -4,8 +4,13 @@ import React, { FC, useEffect } from 'react';
 import { BurgerMenu } from '../../styles/icons/burgerMenu';
 import s from './menu.module.scss';
 import Image from 'next/image'
+import Button from '../shared/button/button';
 
-const Menu: FC = () => {
+interface MenuProps {
+  onSubscriptionClick : () => void
+}
+
+const Menu: FC<MenuProps> = ({onSubscriptionClick}) => {
   const { user } = useUser();
   // For clarity, we save a formatted version of Auth0 user ID in the local storage.
   // We had to use useMemo because useEffect doesn't work. We need to have a function called from userProvider to have access to the user data.
@@ -30,16 +35,18 @@ const Menu: FC = () => {
           <input className={s.menuBtn} type="checkbox" id={s.menuBtn} />
           <label className={s.menuIcon} htmlFor={s.menuBtn}><span className="navicon"><BurgerMenu /></span></label>
           <ul className={s.menu}>
-            <li><Link href="/home">Accueil</Link></li>
-            {
+            <li><Link href="/hello">Accueil</Link></li>
+            {/*             {
               user && 
-              <>    
+              <>
                 <li><Link href="/research">Rechercher</Link></li>
                 <li><Link href="/followup">Suivi</Link></li>
                 <li><Link href="/cover-letter">Lettre de motivation</Link></li>
               </>
             }
-            <li ><Link onClick={onLogout} href={`/api/auth/${user ? 'logout' : 'login'}`}>{user ? 'Déconnexion' : 'Connexion'}</Link></li>
+            <li ><Link onClick={onLogout} href={`/api/auth/${user ? 'logout' : 'login'}`}>{user ? 'Déconnexion' : 'Connexion'}</Link></li> */}
+            <div className={s.button} onClick={onSubscriptionClick} >Recevoir mon invitation</div>
+            
           </ul>
         </>
       </div>

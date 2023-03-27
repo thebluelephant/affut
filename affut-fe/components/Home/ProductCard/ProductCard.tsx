@@ -25,10 +25,8 @@ const ProductCard: FC<ProductCardProps> = ({ product, onSubscription }) => {
           </div>)}
       </ul>
       <div className={styles['productCard__button']}>
-        <Button title={'Souscrire'} type={'primary'} onButtonClick={() => onSubscription(product.id)} />
+        <Button title={'Souscrire'} type={'primary'} onButtonClick={() => onSubscription(product.id ?? '')} />
       </div>
-      
-     
     </div>
   )
 };
