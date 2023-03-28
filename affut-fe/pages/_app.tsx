@@ -11,8 +11,11 @@ export default function App({ Component, pageProps }: AppProps) {
   const [openSubscriptionPopin, setOpenSubscriptionPopin] = useState<boolean>(false)
   const { push } = useRouter();
 
+  const router = useRouter();
+
   useEffect(() => {
-    push('/hello');
+    if (router.pathname === "/_error")
+      push('/hello');
   }, []);
 
   return <UserProvider>

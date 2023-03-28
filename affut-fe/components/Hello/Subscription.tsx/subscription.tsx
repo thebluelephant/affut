@@ -37,7 +37,7 @@ const Subscription: NextPage<SubscriptionProps> = ({isOpen, onClose}) => {
           <div className={s.cross} onClick={() => onClose()}>
             <Cross />
           </div>
-          <img className={s.logo} src="Affut-Logo.png" alt="Logo" />
+          <img className={s.logo} src="/images/Affut-Logo.png" alt="Logo" />
         </div>
 
         <span className={s['container__body']}>

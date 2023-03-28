@@ -36,6 +36,7 @@ const Menu: FC<MenuProps> = ({onSubscriptionClick}) => {
           <label className={s.menuIcon} htmlFor={s.menuBtn}><span className="navicon"><BurgerMenu /></span></label>
           <ul className={s.menu}>
             <li><Link href="/hello">Accueil</Link></li>
+            <li><Link href="/blog">Blog</Link></li>
             {/*             {
               user && 
               <>
