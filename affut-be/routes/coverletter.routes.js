@@ -4,7 +4,7 @@ module.exports = app => {
 
   router.get("/init/:userId", coverLetter.initialize)
   router.get("/:userId", coverLetter.getByUserId)
-  router.post('/generateLetter/:userId', coverLetter.generateLetter)
+  router.post('/generateLetter/:userId/:stripeId', coverLetter.generateLetter)
 
   app.use('/api/coverletter', router);
 }

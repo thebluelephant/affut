@@ -4,7 +4,7 @@ const stripe = require('stripe')(process.env.NEXT_PUBLIC_STRIPE_ID);
 
 export default async function handler(req: { method: string; body: { stripeUserId : string }; }, res) {
   switch (req.method) {
-    // Get list of subscribed products name for a given user stripeId
+    // Get subscribed products name for a given user stripeId
     case 'POST':
       try {
         const subscriptionByUser = await stripe.subscriptions.list({
@@ -18,7 +18,9 @@ export default async function handler(req: { method: string; body: { stripeUserI
         })
         // For each subscription, we get the product name
         const products : string[] = [].concat(...subscriptions).map((product) => product.plan.product)
-        res.status(200).send(products);
+
+        // And because user can only have one subscription at a time, we only return the string value of the first element of th array
+        res.status(200).send(products[0]);
       }
       catch (error) {
         res.send(error);

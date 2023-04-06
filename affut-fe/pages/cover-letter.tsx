@@ -8,23 +8,28 @@ import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { CoverLetterForm } from "../components/coverLetterPage/coverLetterForm/coverLetterForm";
 import { CoverLetterExport } from "../components/coverLetterPage/coverLetterExport/CoverLetterExport";
 import { CoverLetterExplanations } from "../components/coverLetterPage/coverLetterExplanations/CoverLetterExplanations";
+import { useSubscriptionAccess } from "../services/hooks/subscriptionAccess";
+import { coverLetter } from "../services/variable/subscription";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
-const CoverLetter: NextPage = ({ }) => {
+const CoverLetter: NextPage = () => {
+  const {canAccess} = useSubscriptionAccess();
+  const {user} = useUser();
   const [letter, setLetter] = useState<string>()
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [count, setCount] = useState<number>()
   const userId = typeof window !== 'undefined' ? localStorage.getItem('userId') : null;
   const letterCountOver3 = !!(count && count >= 3)
-
+ 
   useEffect(() => {
-    if (userId && !count)
+    if (canAccess(coverLetter) && userId && !count)
       getCoverLetterCount(userId).then((response) => setCount(response.data.count))
   }, []);
 
   const generateLetter = (form : { lastname: string | null; firstname: string | null; job: string | null; strenght: string | null }) => {
     if (userId) {
       setIsLoading(true)
-      generate(userId, {form}).then((resp) => {
+      generate(userId, {form}, user?.stripeId).then((resp) => {
         if (!resp.success) {
           setIsLoading(false)
         } else {
@@ -39,9 +44,9 @@ const CoverLetter: NextPage = ({ }) => {
   return (
     <div className={s.container}>
       <div className={s.container__settings}>    
-        <CoverLetterExplanations/>
-        <CoverLetterForm generateLetter={(form) => generateLetter(form)} disabledField={letterCountOver3}/>
-        <CoverLetterExport saveAs={(letterName, type) => saveAs(letterName, letter, type)} disabledField={letterCountOver3}/>
+        <CoverLetterExplanations cantAccess={!canAccess(coverLetter)}/>
+        <CoverLetterForm generateLetter={(form) => generateLetter(form)} disabledField={{limitReached: letterCountOver3, cantAccess: !canAccess(coverLetter)}}/>
+        <CoverLetterExport saveAs={(letterName, type) => saveAs(letterName, letter, type)} disabledField={letterCountOver3 || !canAccess(coverLetter)}/>
       </div>
 
       <div className={s.container__letter}>

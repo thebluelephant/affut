@@ -1,38 +1,64 @@
 const Followup = require("../models/followup.model.js");
+const { getUserSubscription } = require("./user.controller");
 
-// Create and Save a new followup
-exports.create = (req, res) => {
+
+/**
+ * Create a follow up 
+ * NB :  A user that doesnt have an unlimited access to follow ups and has at least 5 followups can't creates one anymore
+ */
+exports.create = async (req, res) => {
     // Validate request
     if (!req.body) {
         res.status(400).send({
             message: "Content can not be empty!"
         });
     }
+    const { followup, stripeId } = req.body
+    const subscription = await getUserSubscription(stripeId)
+
+    if (!subscription) {
+        // Check number of existing followup of the user
+        const userNumberOfFollowUps = await new Promise((resolve) => Followup.findAllByUserId(followup.userId, false, (err, data) => {
+            if (err)
+                res.status(500).resolve({
+                    message:
+                        err.message || "Some error occurred while retrieving followups."
+                });
+            else resolve(data);
+        })).then((res) => res.length)
+
+        if (userNumberOfFollowUps >= 5) {
+            res.send({ success: false, data: "You reached your follow ups limit, upgadre your plan to access unlimited access" })
+        }
+    }
+
     // Create a Followup
-    const followup = new Followup({
-        company: req.body.company,
-        applicationDate: req.body.applicationDate,
-        jobName: req.body.jobName,
-        announceUrl: req.body.announceUrl ?? null,
-        status: req.body.status,
-        userId: req.body.userId
+    const newFollowup = new Followup({
+        company: followup.company,
+        applicationDate: followup.applicationDate,
+        jobName: followup.jobName,
+        announceUrl: followup.announceUrl ?? null,
+        status: followup.status,
+        userId: followup.userId
     });
 
     // Save followup in the database
-    Followup.create(followup, (err, data) => {
-        if (err)
-            res.status(500).send({
-                message:
-                    err.message || "Some error occurred while creating the followup."
-            });
-        else res.send(data);
+    Followup.create(newFollowup, (err, data) => {
+        if (err) res.send({ success: false, data: err.message })
+        else res.send({ success: true, data });
     });
 };
 
-// Find all followups attached to a user ID.
+/**
+ * Find all followups attached to a user ID.
+ * NB : A user that doesnt have an unlimited access will see only his 5 older followups
+ */
 exports.findAllByUserId = (req, res) => {
     const userId = req?.params?.userId;
-    Followup.findAllByUserId(userId, (err, data) => {
+    const stripeId = req?.query?.stripeid
+    const canAccessUnlimitedFollowups = !!stripeId ?? false
+
+    Followup.findAllByUserId(userId, canAccessUnlimitedFollowups, (err, data) => {
         if (err)
             res.status(500).send({
                 message:

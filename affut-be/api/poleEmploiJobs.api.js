@@ -33,13 +33,13 @@ exports.searchJobOffers = (jobKeyWord, locality) => {
     return this.getJobOfferApiToken().then((tokenData) => {
         const token = `${tokenData.token_type} ${tokenData.access_token}`;
         let url = process.env.POLEEMPLOI_JOBOFFERAPI;
+
         if (locality) {
             url += `&commune=${locality}`
         }
         if (jobKeyWord) {
             url += `&motsCles=${jobKeyWord}`
         }
-
         return axios.get(url, {
             headers: {
                 Authorization: token

@@ -1,0 +1,18 @@
+@import './variables/colors.module.scss';
+
+
+.checkout {
+
+    &__popin {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 200px;
+        font-size: 20px;
+        justify-content: space-evenly;
+
+        p {
+            text-align: center;
+        }
+    }
+}
