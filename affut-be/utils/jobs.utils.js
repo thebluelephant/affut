@@ -1,4 +1,28 @@
 const formatter = require('../utils/formatter.utils');
+
+const contractTypeFormatter = (contractTypeLibelle) => {
+    const contracts = new Map([
+        ['intérimaire', 'Interim'],
+        ['temporary', 'CDD'],
+        ['interim', 'Interim'],
+        ['CDI', 'CDI'],
+        ['CDD', 'CDD'],
+        ['fulltime', 'CDI'],
+        ['stage', 'Stage'],
+        ['SAI', 'Saisonnier'],
+        ['Saisonnier', 'Saisonnier'],
+    ])
+    let result
+    contracts.forEach((value, key) => contractTypeLibelle.toLowerCase().includes(key) ? result = contracts.get(key) : null)
+    return result
+}
+
+const jobTitleFormatter = (title) => {
+    // Regex pour chercher le "(h/f)"
+    const regex = /(?:\s|^)[\/\(]?[hHfF]\/[hHfF](?:[\s\)]|$)?/;
+    return title?.replace(regex, "");
+}
+
 /**
  * 
  * @param {*} rapidJobs[]
@@ -7,11 +31,11 @@ const formatter = require('../utils/formatter.utils');
 exports.formatRapidJobToJob = (rapidJobs) => {
     return rapidJobs.map(job => {
         // If the job comes from Pole Emploi, we don't need to display it because we already use the Pole Emploi job API 
-        if (job.origineOffre.origine === 'Pôle Emploi') {
+        if (job.job_publisher === 'Pôle Emploi') {
             return
         } else return {
             id: job.job_id,
-            intitule: formatter.capitalize(job.job_title),
+            intitule: formatter.capitalize(jobTitleFormatter(job.job_title)),
             description: job.job_description,
             dateCreation: job.job_posted_at_datetime_utc,
             lieuTravail: {
@@ -25,7 +49,7 @@ exports.formatRapidJobToJob = (rapidJobs) => {
                 logo: job.employer_logo,
                 url: job.employer_website
             },
-            typeContrat: job.job_employment_type,
+            typeContrat: job.job_employment_type ? contractTypeFormatter(job.job_employment_type) : null,
             salaire: {
                 libelle: job.job_max_salary ?? job.job_min_salary,
             },
@@ -50,7 +74,8 @@ exports.formatPoleEmploiToJob = (poleEmploiJobs) => {
     return poleEmploiJobs?.map(job => {
         return {
             ...job,
-            intitule: formatter.capitalize(job.intitule),
+            intitule: formatter.capitalize(jobTitleFormatter(job.intitule)),
+            typeContratLibelle: job.typeContratLibelle,
             lieuTravail: {
                 libelle: formatter.capitalize(job.lieuTravail.libelle),
                 commune: formatter.capitalize(job.lieuTravail.commune)
@@ -60,5 +85,5 @@ exports.formatPoleEmploiToJob = (poleEmploiJobs) => {
             }
         };
     });
-
 }
+

@@ -1,0 +1,2 @@
+export const followupColName = new Map([['company', 'Entreprise'], ['applicationDate', 'Date de candidature'], ['jobName', 'Intitulé du poste'], ['announceUrl', "Lien de l'annonce"], ['status', 'Statut']])
+export const followupStatus = new Map([['toSend', 'A envoyer'], ['sent', 'Envoyé'], ['meetingPlanned', 'Entretien planifié'],['refused', 'Refusé'], ['accepted', "En attente d'offre"]])

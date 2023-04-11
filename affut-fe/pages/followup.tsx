@@ -14,6 +14,7 @@ import BinaryPopin from "../components/shared/binaryPopin/binaryPopin";
 import { useSubscriptionAccess } from "../services/hooks/subscriptionAccess";
 import { followUp } from "../services/variable/subscription";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import { followupColName } from "../services/utils/followupTable";
 
 interface FollowupProps {
 }
@@ -128,11 +129,11 @@ const Followup: NextPage<FollowupProps> = ({ }) => {
     <div className={s['followupPage__table']}>
       <div className={s['row__header']}>
         {
-          followUps?.length ? Object.keys(followUps[0]).map((headerTitle) => {
-            if (headerTitle === "userId" || headerTitle === "id") {
+          followUps?.length ? Object.keys(followUps[0]).map((colName) => {
+            if (colName === "userId" || colName === "id") {
               return
             } else {
-              return <span key={headerTitle}>{headerTitle}</span>
+              return <span key={colName}>{followupColName.get(colName)}</span>
             }
           }) : null
         }

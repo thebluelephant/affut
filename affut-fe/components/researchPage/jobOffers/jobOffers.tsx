@@ -3,6 +3,7 @@ import s from './jobOffers.module.scss';
 import { Job } from '../../../services/typing/job.interface';
 import JobDetails from '../jobDetails/jobDetails';
 import { useWindowDimensions } from '../../../services/hooks/windowDimension';
+import Badges from '../Badges/badges';
 
 type JobOffersProps = {
     jobOffers : Job[] | null,
@@ -22,8 +23,12 @@ const JobOffers: FC<JobOffersProps> = ({jobOffers, onUserCandidates}) => {
 
   const offers = jobOffers?.map((offer) => 
     <div className={`${s.job} ${offer?.id === jobDetails?.id ? s['job--selected'] : ''}`} key={offer.id} onClick={() => { setJobDetails(offer) }}>
-      {offer.intitule && <p className={`${s.job__name}`}>{offer.intitule}</p>}
-      {offer.lieuTravail.libelle && <p className={`${s.job__place}`}>{offer.lieuTravail.libelle}</p>}
+      <div className={s.details}>
+        {offer.intitule && <p className={`${s.details__name}`}>{offer.intitule}</p>}
+        {offer.entreprise.nom && <p className={`${s.details__place}`}>{offer.entreprise.nom}</p>}
+      </div>
+
+      <Badges typeContrat={offer.typeContrat} lieuTravail={offer.lieuTravail.libelle} salaire={offer.salaire.libelle}/>
     </div>
   )
   

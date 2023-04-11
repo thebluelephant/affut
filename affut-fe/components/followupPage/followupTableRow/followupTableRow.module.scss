@@ -6,6 +6,7 @@
 
     @media screen and (max-width: 900px) {
         width: 100%;
+        justify-content: space-between;
     }
 
     .statusContainer {
@@ -47,6 +48,7 @@
         @media screen and (max-width: 900px) {
             display: flex;
             width: 150px;
+            font-family: 'KumbhSans-Bold';
         }
     }
 

@@ -21,41 +21,68 @@
         }
 
         .job {
-            height: 50px;
+            min-height: 50px;
             width: 100%;
             margin: 10px 0;
             display: flex;
-            align-items: center;
+            flex-direction: column;
             padding: 10px;
             background-color: $white-transparent;
             border-radius: 10px;
             cursor: pointer;
+            row-gap: 5px;
 
             &--selected,
             &:hover {
                 background-color: white;
             }
 
-            &__name {
-                margin-right: 15px;
-            }
-
-            &__place {
-                text-transform: lowercase;
-
-                &:before {
-                    content: "(";
-                }
-
-                &:after {
-                    content: ")";
-                }
-
-            }
-
             &__noJob {
                 text-align: center;
             }
+
+            .details {
+                display: flex;
+                align-items: baseline;
+
+                @media screen and (max-width: 900px) {
+                    flex-direction: column;
+                }
+
+
+                &__name {
+                    margin-right: 10px;
+                    font-size: 20px;
+                    font-family: 'KumbhSans-Bold';
+
+                    @media screen and (max-width: 900px) {
+                        font-size: 18px;
+                    }
+                }
+
+                &__place {
+
+                    &:before {
+                        content: " - ";
+                    }
+
+                    &:first-letter {
+                        text-transform: uppercase
+                    }
+
+                    @media screen and (max-width: 900px) {
+                        font-size: 13px;
+
+                        &:before {
+                            content: unset
+                        }
+                    }
+
+                }
+            }
+
+
+
         }
     }
 
