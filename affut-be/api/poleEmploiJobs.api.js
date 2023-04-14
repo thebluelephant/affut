@@ -1,5 +1,6 @@
 const axios = require('axios');
 const jobUtils = require('../utils/jobs.utils');
+const mocks = require('../controllers/mockPoleEmploi')
 require('dotenv').config();
 
 /**
@@ -30,7 +31,7 @@ exports.getJobOfferApiToken = () => {
  * 
  */
 exports.searchJobOffers = (jobKeyWord, locality) => {
-    return this.getJobOfferApiToken().then((tokenData) => {
+    /* return this.getJobOfferApiToken().then((tokenData) => {
         const token = `${tokenData.token_type} ${tokenData.access_token}`;
         let url = process.env.POLEEMPLOI_JOBOFFERAPI;
 
@@ -47,6 +48,7 @@ exports.searchJobOffers = (jobKeyWord, locality) => {
         }).then((response) => {
             return jobUtils.formatPoleEmploiToJob(response.data.resultats)
         })
-    })
+    }) */
+    return jobUtils.formatPoleEmploiToJob(mocks.poleEmploiMocks)
 
 }

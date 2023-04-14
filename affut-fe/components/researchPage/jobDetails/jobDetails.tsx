@@ -17,15 +17,18 @@ const JobDetails: FC<JobDetailsProps> = ({ job, onUserCandidates }) => {
   const details = <div className={styles.jobDetails}>
     <div className={styles.header}>
       <p className={styles.header__intitule}>{job.intitule}</p>
-      <p className={styles.header__place}> {job.entreprise.nom} {job.lieuTravail.libelle} </p>
 
       <div className={styles.header__modality}>
-        <p className={styles.type}>{job.typeContrat} {job.typeContratLibelle}</p>
-        <p className={styles.complement}>{job.dureeTravailLibelle} {job.salaire.libelle}</p>
+        {job.entreprise.nom && <p><span>Entreprise : </span> {job.entreprise.nom}</p>}
+        {job.lieuTravail.libelle && <p><span>Ville : </span> {job.lieuTravail.libelle}</p>}
+        {(job.typeContratLibelle || job.typeContrat) && <p className={styles.type}><span >Contrat :</span>  {job.typeContratLibelle ?? job.typeContrat}</p>}
+        {(job.dureeTravailLibelle || job.salaire.libelle) && <p className={styles.complement}><span >Durée de travail :</span> {job.dureeTravailLibelle} - {job.salaire.libelle}</p>}
       </div>
     </div>
 
     <div className={styles.body}>
+      <span>Description 
+      </span> 
       <p className={styles.description}>{job.description}</p>
     </div>
 

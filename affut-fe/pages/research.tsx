@@ -30,6 +30,7 @@ const Research: NextPage = () => {
     }
   }, [pendingFollowup]);
 
+
   const onJobResearch = (jobKeyWord: string, locality: { city: string; code: number; }) => {
     setResearchInProgress(true)
     const verifiedLocality = locality.code > 0 ? locality : undefined

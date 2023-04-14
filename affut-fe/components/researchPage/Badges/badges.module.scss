@@ -1,0 +1,36 @@
+@import '../../../styles/variables/colors.module.scss';
+
+
+.badges {
+    display: flex;
+    column-gap: 5px;
+
+    @media screen and (max-width: 900px) {
+        font-size: 10px;
+        flex-direction: column;
+        row-gap: 5px;
+    }
+
+    .badge {
+        border-radius: 20px;
+        font-size: 13px;
+        padding: 3px 10px;
+        color: $white;
+
+        @media screen and (max-width: 900px) {
+            width: fit-content;
+        }
+
+        &--pink {
+            background-color: rgba(239, 61, 136, 1);
+        }
+
+        &--blue {
+            background-color: rgba(0, 166, 166, 1);
+        }
+
+        &--red {
+            background-color: rgba(143, 32, 112, 1)
+        }
+    }
+}
