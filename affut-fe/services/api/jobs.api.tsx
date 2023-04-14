@@ -24,6 +24,7 @@ export const searchJobOffers = (jobKeyWord?: string, locality?:  { city: string;
   }
   
   return axios.get(url).then((response) => {
+    console.log(response);
     return response.data
   })
 

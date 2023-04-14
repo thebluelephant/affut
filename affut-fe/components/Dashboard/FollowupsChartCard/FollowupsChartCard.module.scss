@@ -1,0 +1,24 @@
+@import '../../../styles/variables/colors.module.scss';
+
+
+.followupsChartCard {
+    display: flex;
+    height: 100%;
+
+    a {
+        color: $primary;
+        text-decoration: underline;
+        text-align: end;
+    }
+
+    .chart {
+        display: flex;
+        padding: 30px;
+        height: 100%;
+
+        text {
+            font-size: 5px;
+        }
+    }
+
+}

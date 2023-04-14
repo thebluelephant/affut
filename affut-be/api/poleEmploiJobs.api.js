@@ -1,5 +1,6 @@
 const axios = require('axios');
 const jobUtils = require('../utils/jobs.utils');
+const mocks = require('../controllers/mockPoleEmploi')
 require('dotenv').config();
 
 /**
@@ -48,5 +49,6 @@ exports.searchJobOffers = (jobKeyWord, locality) => {
             return jobUtils.formatPoleEmploiToJob(response.data.resultats)
         })
     })
+    // return jobUtils.formatPoleEmploiToJob(mocks.poleEmploiMocks)
 
 }

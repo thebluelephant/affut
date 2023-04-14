@@ -20,7 +20,7 @@ const UserFactory = ({children}) => {
     if (user && user.stripeId) {
       getUserSubscriptions(user.stripeId).then((subscription) => setUserSubscription(subscription))
     }
-  }, []);
+  }, [user]);
   
   return <AppContext.Provider value={{subscription : userSubscription, userId : user?.sub?.substring(6) ?? '' }}>{children}</AppContext.Provider>
 };

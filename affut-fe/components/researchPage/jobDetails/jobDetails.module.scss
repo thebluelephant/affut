@@ -18,12 +18,17 @@ $blocks-margin : 5vh;
         width: 100%;
     }
 
+    span {
+        font-family: 'KumbhSans-Bold';
+    }
+
     .header {
         margin-bottom: 40px;
         min-height: $jobDetails-header;
 
         &__intitule {
-            font-size: 25px;
+            font-family: 'KumbhSans-Bold';
+            font-size: 30px;
         }
 
         &__place {

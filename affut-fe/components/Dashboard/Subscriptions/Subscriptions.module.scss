@@ -1,0 +1,25 @@
+@import '../../../styles/variables/colors.module.scss';
+
+.subscriptions {
+    display: flex;
+    height: 300px;
+    padding: 10px 15px;
+    border-radius: 10px;
+    padding: 0 15px;
+    justify-content: center;
+    column-gap: 30px;
+
+    @media screen and (max-width: 900px) {
+        flex-direction: column;
+        row-gap: 20px;
+    }
+
+    &__title {
+        display: none;
+
+        @media screen and (max-width: 900px) {
+            display: block;
+        }
+
+    }
+}

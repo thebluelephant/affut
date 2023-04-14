@@ -1,0 +1,15 @@
+@import '../../../styles/variables/colors.module.scss';
+
+.card {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    width: fit-content;
+    padding: 10px 15px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
+
+    @media screen and (max-width: 900px) {
+        width: 100%;
+    }
+}

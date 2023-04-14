@@ -6,7 +6,7 @@ export const useSubscriptionAccess = () => {
   const appContext = useContext(AppContext);
 
   const featureSubscription : Map<string, string[]> = new Map( [
-    [, [premiumSubscription]],
+    [coverLetter, [premiumSubscription]],
     [followUp, [starterSubscription, premiumSubscription]],
     [research, [starterSubscription, premiumSubscription]],
   ])

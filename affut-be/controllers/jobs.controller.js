@@ -12,7 +12,7 @@ exports.getAll = async (req, res) => {
         // Call the 2 API's at the same time
         const results = await Promise.all([
             poleEmploiJobsUtils.searchJobOffers(req.query.jobName, parseInt(req.query.localitycode)),
-            // rapidApiJobsUtils.searchJobOffersFromRapidApi(req.query.jobName, req.query.localitycity)
+            rapidApiJobsUtils.searchJobOffersFromRapidApi(req.query.jobName, req.query.localitycity)
         ]);
 
         // Get the data of each call
@@ -31,6 +31,7 @@ exports.getAll = async (req, res) => {
             } else {
                 // If the user doesnt have a stripeId, he's on free plan and can only see the 25 first results
                 res.send(allJobs.slice(0, 25))
+                // res.send(allJobs)
             }
         } else res.send([])
 

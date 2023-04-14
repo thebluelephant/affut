@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { FC } from 'react';
 import { createSubscription } from '../../../services/api/stripe.api';
 import { Product } from '../../../services/typing/product.interface';
+import Title from '../../shared/title/title';
 import ProductCard from '../ProductCard/ProductCard';
 import s from './Subscriptions.module.scss'
 
@@ -11,7 +12,7 @@ const Subscriptions: FC = () => {
   const subscriptions = [
     {
       priceId: null,
-      title: 'Gratuit',
+      title: 'Découverte',
       price: '0€',
       advantages: [
         "Résultats des recherches d'offres d'emploi limité a 25",
@@ -40,7 +41,7 @@ const Subscriptions: FC = () => {
   ]
 
   const onUserSubscribes = (productId: string) => {
-    if (userId) {
+    if (userId && productId) {
       const userSubscription = {
         line_items: { price: productId },
         mode: 'subscription',
@@ -59,6 +60,10 @@ const Subscriptions: FC = () => {
 
   return (
     <div className={s.subscriptions}>
+      <span className={s.subscriptions__title}>
+        <Title title='Abonnements'/>
+      </span>
+      
       {subscriptions?.map((product: Product) => 
         <ProductCard key={product.priceId} product={product} onSubscription={(priceId) => onUserSubscribes(priceId)} />
       )}

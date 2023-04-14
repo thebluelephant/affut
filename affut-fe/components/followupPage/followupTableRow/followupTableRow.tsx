@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import styles from './followupTableRow.module.scss';
 import { Followup } from '../../../services/typing/followup.interface';
 import Button from '../../shared/button/button';
+import { followupColName, followupStatus } from '../../../services/utils/followupTable';
 
 type FollowupTableRowProps = {
     followup: Followup;
@@ -12,18 +13,17 @@ type FollowupTableRowProps = {
 const FollowupTableRow: FC<FollowupTableRowProps> = ({ followup, followUpInEdition, setFollowUpInEdition }) => {
   const headers = Object.keys(followup);
   const currentRowIsInEdition = followUpInEdition && followUpInEdition.id === followup.id;
+  
 
   const renderInput = (colHeader: string) => {
     const data = followUpInEdition && followUpInEdition[colHeader as keyof typeof followUpInEdition];
 
     if (colHeader === "status") {
-      return <select value={data ?? 'toSend'} className={styles['text__select']} name="status" onChange={(e) => { setFollowUpInEdition(colHeader, e.target.value) }}>
-        <option value="toSend">A envoyer</option>
-        <option value="sent">Candidature envoyée</option>
-        <option value="meetingPlanned">Entretien planifié</option>
-        <option value="refused">Candidature refusée</option>
-        <option value="accepted">En attente doffre</option>
-      </select>
+      return(
+        <select value={data ?? 'toSend'} className={styles['text__select']} name="status" onChange={(e) => { setFollowUpInEdition(colHeader, e.target.value) }}>
+          {Array.from(followupStatus.keys()).map((status : string) => <option value={status} key={status}>{followupStatus.get(status)}</option>)}
+        </select>
+      )
     } else {
       // We need to use followUpInEdition data when editing to see real time changes
       return <input className={styles['text__input']} type="text" value={data ?? ''} key={colHeader}
@@ -41,7 +41,7 @@ const FollowupTableRow: FC<FollowupTableRowProps> = ({ followup, followUpInEditi
     } else if (colHeader === "status") {
       return <div className={styles.statusContainer}>
         <span className={`${styles.dot} ${styles[`dot--${data}`]} `}></span>
-        <p className={styles['text__data']}>{data}</p>
+        <p className={styles['text__data']}>{followupStatus.get(data)}</p>
       </div>
     } else {
       return <p className={styles['text__data']}>{data}</p>
@@ -58,8 +58,10 @@ const FollowupTableRow: FC<FollowupTableRowProps> = ({ followup, followUpInEditi
           renderInput(colHeader)
         )
       } else return (
+        
         <div key={colHeader} className={styles.text}>
-          <p className={styles['text__colName']}>{colHeader}</p>
+          {/* Only show col name in responsive mode */}
+          <p className={styles['text__colName']}>{followupColName.get(colHeader)}</p>
           {renderReadOnlyData(colHeader)}
         </div>
       )
