@@ -14,13 +14,13 @@ export default function Post({frontmatter, content}) {
         <Link href={'/blog'}>Retour</Link>
       </div>
       <article className={s.article}>
-        <img src={`/images/blog/${banner}`}/>
+        <img src={`/images/blog/${banner}`} alt={`image-article-${title}`}/>
         <div className={s.article__data}>
           <h1>{title}</h1>
           <div className={s.content} dangerouslySetInnerHTML={{ __html: md().render(content) }} />
           <h3 className={s.footer}>
             {date}
-            <span>{tags.map((tag : string) => <p className={s.tag} key={tag}>{tag}</p>)}</span> 
+            <span>{tags?.map((tag : string) => <p className={s.tag} key={tag}>{tag}</p>)}</span> 
           </h3>
         </div>
       </article>

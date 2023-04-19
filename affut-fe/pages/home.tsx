@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import SubscriptionCard from "../components/Home/SubscriptionCard/SubscriptionCard";
 import Subscriptions from "../components/Home/Subscriptions/Subscriptions";
 import styles from '../styles/home.module.scss';
+import Title from "../components/shared/title/title";
 
 interface HomeProps {
 }
@@ -12,6 +13,8 @@ const Home: NextPage<HomeProps> = ({ }) => {
 
   return (
     <div className={styles.home}>
+      {user && <Title title={"Hello !"} />}
+      
       {(!user || user && !user.stripeId) && <Subscriptions/>}
       {(user && user.stripeId) && <SubscriptionCard/>}
     </div>
