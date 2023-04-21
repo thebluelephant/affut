@@ -6,16 +6,23 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy": "gcloud app deploy --project affut-376215"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^2.0.1",
+    "@mailchimp/mailchimp_marketing": "^3.0.80",
+    "@material-ui/core": "^4.12.4",
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.9",
     "axios": "^1.2.1",
     "eslint": "8.28.0",
     "eslint-config-next": "13.0.6",
+    "gray-matter": "^4.0.3",
+    "js-confetti": "^0.11.0",
     "lodash.debounce": "^4.0.8",
+    "mailchimp": "^1.2.1",
+    "markdown-it": "^13.0.1",
     "material-ui-chip-input": "^2.0.0-beta.2",
     "next": "13.0.6",
     "react": "18.2.0",
@@ -28,6 +35,7 @@
   },
   "devDependencies": {
     "@types/lodash.debounce": "^4.0.7",
+    "@types/markdown-it": "^12.2.3",
     "@types/node": "^18.13.0"
   }
 }

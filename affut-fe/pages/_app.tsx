@@ -1,6 +1,5 @@
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 import '../styles/globals.scss'
-import Image from 'next/image'
 import type { AppProps } from 'next/app'
 import Menu from '../components/Menu/menu'
 import UserFactory from '../components/userFactory/UserFactory';
