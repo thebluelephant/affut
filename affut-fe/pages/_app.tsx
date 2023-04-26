@@ -6,6 +6,7 @@ import UserFactory from '../components/userFactory/UserFactory';
 import { AppContext } from '../services/context/state';
 
 export default function App({ Component, pageProps }: AppProps) {
+
   return(
     <UserProvider>
       <UserFactory>
