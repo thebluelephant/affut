@@ -77,6 +77,21 @@
         clear: both;
         max-height: 0;
         transition: max-height .2s ease-out;
+        position: relative;
+    }
+
+    .button {
+        position: absolute;
+        right: 0;
+        color: white;
+        padding: 5px 10px;
+        background: $primary;
+        border-radius: 5px;
+        cursor: pointer;
+
+        @media screen and (max-width: 900px) {
+            position: unset;
+        }
     }
 
     /* menu icon */

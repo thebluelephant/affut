@@ -7,14 +7,18 @@ const baseApi = process.env.NEXT_PUBLIC_APP_API
  */
 export const getUserFollowUps: (userId: string, stripeId? : string) => Promise<Followup[]> = (userId, stripeId) => {
   let url = `${baseApi}/followup/getByUserId/${userId}/`
+  try {
+    if (stripeId){
+      url += `?&stripeid=${stripeId}`
+    }
 
-  if (stripeId){
-    url += `?&stripeid=${stripeId}`
+    return axios.get(url).then((response) => {
+      return response.data
+    })
+  } catch (e) {
+    console.log(e);
   }
 
-  return axios.get(url).then((response) => {
-    return response.data
-  })
 }
 
 /**

@@ -9,5 +9,8 @@
     "nodemon": "^2.0.20",
     "openai": "^3.2.1",
     "stripe": "^11.16.0"
+  },
+  "scripts": {
+    "start": "npx nodemon server.js"
   }
 }

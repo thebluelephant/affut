@@ -21,23 +21,23 @@
             margin-right: 10px;
 
             &--toSend {
-                background-color: lightgreen;
+                background-color: #A5A394;
             }
 
             &--sent {
-                background-color: green;
+                background-color: #46ABF3;
             }
 
             &--meetingPlanned {
-                background-color: pink;
+                background-color: #F3C346;
             }
 
             &--refused {
-                background-color: red;
+                background-color: #F36546;
             }
 
             &--accepted {
-                background-color: blue;
+                background-color: #48C65C;
             }
         }
     }

@@ -19,7 +19,7 @@ export default handleAuth({
   },
   async logout(req, res) {
     await handleLogout(req, res, {
-      returnTo: 'http://localhost:3000/home'
+      returnTo: 'http://localhost:3000/hello'
     });
   },
 });

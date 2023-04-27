@@ -43,16 +43,19 @@ const Menu: FC = () => {
           <input className={s.menuBtn} type="checkbox" id='menuBtn' />
           <label className={s.menuIcon} htmlFor='menuBtn'><span className="navicon"><BurgerMenu /></span></label>
           <ul className={s.menu}>
-            <li><Link href="/home">Accueil</Link></li>
+            <li><Link href="/hello">Accueil</Link></li>
             {
               user && 
               <>    
+                <li><Link href="/dashboard">Dashboard</Link></li>
                 <li><Link href="/research">Rechercher</Link></li>
                 <li><Link href="/followup">Suivi</Link></li>
                 <li><Link href="/cover-letter">Lettre de motivation</Link></li>
               </>
             }
-            <li ><Link onClick={onLogout} href={`/api/auth/${user ? 'logout' : 'login'}`}>{user ? 'Déconnexion' : 'Connexion'}</Link></li>
+            <li><Link href="/blog">Blog</Link></li>
+            <li ><Link onClick={onLogout} href={`/api/auth/${user ? 'logout' : 'login'}`}>{user ? 'Déconnexion' : 'Connexion'}</Link></li> 
+            
           </ul>
         </>
       </div>

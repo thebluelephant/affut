@@ -1,0 +1,92 @@
+@import '../../../styles/variables/colors.module.scss';
+
+.followupsChartCard {
+    display: flex;
+    height: 100%;
+
+    a {
+        color: $primary;
+        text-decoration: underline;
+        text-align: end;
+    }
+
+    &__body {
+        display: flex;
+        height: 100%;
+        width: 25vw;
+        justify-content: space-between;
+
+        @media screen and (max-width: 900px) {
+            width: 100%;
+        }
+
+        &__legend {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            .title {
+                display: flex;
+                margin-bottom: 10px;
+                align-items: center;
+
+                span {
+                    font-family: 'KumbhSans-Bold';
+                }
+
+                &__dot {
+                    height: 10px;
+                    width: 10px;
+                    background-color: grey;
+                    border-radius: 20px;
+                    margin: 10px;
+
+                    &--toSend {
+                        background-color: #A5A394;
+                    }
+
+                    &--sent {
+                        background-color: #46ABF3;
+                    }
+
+                    &--meetingPlanned {
+                        background-color: #F3C346;
+                    }
+
+                    &--refused {
+                        background-color: #F36546;
+                    }
+
+                    &--accepted {
+                        background-color: #48C65C;
+                    }
+                }
+            }
+
+
+        }
+
+        &__chart {
+            .totalFollowups {
+                span {
+                    font-size: 25px;
+                    font-family: 'KumbhSans-Bold';
+                }
+            }
+
+            .chart {
+                display: flex;
+                padding: 20px 40px 0 0;
+                height: 200px;
+
+                text {
+                    font-size: 5px;
+                }
+            }
+        }
+
+
+    }
+
+
+}

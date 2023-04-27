@@ -34,7 +34,7 @@ module.exports = app => {
             client_reference_id: req.body.authUserId,
             mode: 'subscription',
             success_url: `${YOUR_DOMAIN}/checkout?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: `${YOUR_DOMAIN}/home`,
+            cancel_url: `${YOUR_DOMAIN}/hello`,
         });
         res.send(session)
     });

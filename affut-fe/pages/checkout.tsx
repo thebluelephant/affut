@@ -42,7 +42,7 @@ const Checkout: FC = () => {
         if (!subscription.length){
           // If there's no subscription, it means the user has no active plan and we need to delete the auth0 metadata "stripeId" by passing 'null' value
           updateUserMetadata(null, userId).then(() => {setShouldOpen(true) ; showLogoutPopinAndLogout()})
-        } else {router.push('/home')}
+        } else {router.push('/dashboard')}
       })
     }
   }
@@ -61,7 +61,7 @@ const Checkout: FC = () => {
         setStripeUserId(user.stripeId as string)
       }
       if (!router.query.session_id && !user?.stripeId){        
-        router.push('/home')
+        router.push('/dashboard')
       }
     }
   }, [isLoaded]);

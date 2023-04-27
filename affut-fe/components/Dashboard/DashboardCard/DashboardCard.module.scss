@@ -1,0 +1,12 @@
+@import '../../../styles/variables/colors.module.scss';
+
+.dashboardCard {
+    display: flex;
+    height: 100%;
+
+    &__body {
+        display: flex;
+        height: 100%;
+        padding: 20px 0;
+    }
+}

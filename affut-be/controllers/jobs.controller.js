@@ -30,8 +30,7 @@ exports.getAll = async (req, res) => {
                 } else res.send(allJobs.slice(0, 25))
             } else {
                 // If the user doesnt have a stripeId, he's on free plan and can only see the 25 first results
-                //res.send(allJobs.slice(0, 25))
-                res.send(allJobs)
+                res.send(allJobs.slice(0, 25))
             }
         } else res.send([])
 

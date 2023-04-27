@@ -12,7 +12,7 @@ const Subscriptions: FC = () => {
   const subscriptions = [
     {
       priceId: null,
-      title: 'Gratuit',
+      title: 'Découverte',
       price: '0€',
       advantages: [
         "Résultats des recherches d'offres d'emploi limité a 25",

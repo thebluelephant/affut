@@ -23,8 +23,6 @@ export const searchJobOffers = (jobKeyWord?: string, locality?:  { city: string;
     url += `&stripeId=${userStripeId}`
   }
   
-  return axios.get(url).then((response) => {
-    return response.data
-  })
+  return axios.get(url).then((response) => response.data)
 
 }

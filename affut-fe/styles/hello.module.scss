@@ -1,0 +1,190 @@
+@import './variables/colors.module.scss';
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.home {
+    height: 100%;
+    position: relative;
+
+    .title {
+        display: flex;
+        position: absolute;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        font-size: 50px;
+        font-family: 'KumbhSans-Bold';
+        top: 10%;
+
+        @media screen and (max-width: 900px) {
+            text-align: center;
+            font-size: 40px;
+            padding: 0 10px;
+            top: 30%;
+        }
+
+        h1,
+        h2 {
+            font-size: 50px;
+            margin: 0;
+
+            @media screen and (max-width: 450px) {
+                font-size: 30px;
+            }
+
+            @media screen and (max-width: 300px) {
+                font-size: 25px;
+            }
+        }
+
+        h3 {
+            font-size: 18;
+
+        }
+
+        h1 {
+            .primary {
+                color: $primary;
+            }
+        }
+
+        &__thirdLine {
+            position: relative;
+
+            @media screen and (max-width: 450px) {
+                font-size: 30px;
+            }
+
+            @media screen and (max-width: 300px) {
+                font-size: 25px;
+            }
+
+            .text {
+                position: relative;
+                z-index: 2;
+
+                &__primary {
+                    font-family: 'KumbhSans-Bold';
+                    font-size: 30px;
+
+                    @media screen and (max-width: 900px) {
+                        font-size: 20px;
+                    }
+
+                }
+            }
+
+            .underline {
+                position: absolute;
+                bottom: 5px;
+                height: 15px;
+                width: 100%;
+                background-color: $yellow;
+
+                @media screen and (max-width: 900px) {
+                    height: 10px;
+                    left: 0;
+                }
+            }
+        }
+
+        &__fourthLine {
+            font-size: 18px;
+            margin-top: 15px;
+        }
+    }
+
+    .images {
+        height: 55%;
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+
+        @media screen and (max-width: 900px) {
+            height: 100%;
+        }
+
+        &__first {
+            height: 265px;
+            border-radius: 170px;
+            position: absolute;
+            left: 25%;
+            top: 10%;
+
+            @media screen and (max-width: 900px) {
+                height: 80px;
+                top: 17%;
+                left: 6%;
+            }
+
+            @media screen and (max-width: 300px) {
+                display: none;
+            }
+        }
+
+        &__second {
+            height: 130px;
+            border-radius: 150px;
+            position: absolute;
+            bottom: 23%;
+            left: 10%;
+
+            @media screen and (max-width: 900px) {
+                height: 60px;
+                left: unset;
+                right: 10%;
+                bottom: -1%;
+            }
+        }
+
+        &__third {
+            height: 200px;
+            border-radius: 200px;
+            right: 25%;
+            bottom: 20%;
+            position: absolute;
+
+            @media screen and (max-width: 900px) {
+                height: 150px;
+                right: unset;
+                bottom: 5%;
+                left: -10%;
+            }
+
+            @media screen and (max-width: 300px) {
+                height: 115px;
+            }
+
+
+        }
+
+        &__fourth {
+            height: 150px;
+            border-radius: 150px;
+            position: absolute;
+            right: 10%;
+            top: 0;
+
+            @media screen and (max-width: 900px) {
+                height: 80px;
+                top: 10%;
+                right: 13%;
+            }
+
+            @media screen and (max-width: 300px) {
+                height: 50px;
+                top: 10%
+            }
+
+        }
+
+    }
+}
