@@ -12,14 +12,6 @@ const Menu: FC = () => {
   const router = useRouter();
   const { windowWidth } = useWindowDimensions();
 
-  // For clarity, we save a formatted version of Auth0 user ID in the local storage.
-  // We had to use useMemo because useEffect doesn't work. We need to have a function called from userProvider to have access to the user data.
-  useEffect(() => {
-    if (user?.sub) {
-      localStorage.setItem('userId', user.sub.substring(6));
-    }
-  }, [user?.sub]);
-  
   const onLogout = () => {
     // Seems we can't custom enough auth0 + nextJs to remove the localStorage on logout, middleware doesn't seems to work too, so here it is.
     localStorage.removeItem('userId')
